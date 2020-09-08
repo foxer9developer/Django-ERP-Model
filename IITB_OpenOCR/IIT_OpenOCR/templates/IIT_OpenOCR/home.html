@@ -1,0 +1,20 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+{% for project in projects %}
+<article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                 <a class="mr-2" href="#"><b>UserRole:</b> {{ project.user_role }} </a>
+                <small class="text-muted"></small>
+                </div>
+            <h2><a class="article-title" href="#">{{ project.name }}</a></h2>
+                <p class="article-content"><b>Version:</b> {{ project.version }} </p>
+                <p class="article-content"><b>Stage: {{ project.stage }}</b></p>
+                <p class="article-content"><b>Turned In on:</b> {{ project.turn_in }}</p>
+            </div>
+        </article>
+{% endfor %}
+{% endblock content %}
+
+
+

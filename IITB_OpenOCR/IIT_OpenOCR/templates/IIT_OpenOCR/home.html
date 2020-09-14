@@ -9,9 +9,11 @@
                 </div>
                 <h2><a class="article-content"><b>Name:</b>{{ users.name }}</a></h2>
                 <p class="article-content"><b>Github:</b>{{ users.github_username }}</p>
-                <p class="article-content"><b>Rating:</b> {{ users.avg_rating }} </p>
-                <p class="article-content"><b>Sets Completed: {{ users.sets_completed }}</b></p>
-                <p class="article-content"><b>Pages Completed:</b> {{ users.pages_completed }}</p>
+                {% if users.user_role != 'Project Manager' %}
+                    <p class="article-content"><b>Rating:</b> {{ users.user_sets.avg_rating }} </p>
+                    <p class="article-content"><b>Sets Completed: {{ users.user_sets.sets_completed }}</b></p>
+                    <p class="article-content"><b>Pages Completed:</b> {{ users.user_sets.pages_completed }}</p>
+                {% endif %}
             </div>
         </article>
 {% endfor %}

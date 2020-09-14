@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.redirects',
+    'social_django',
+    'accounts',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +76,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'IITB_OpenOCR.wsgi.application'
 
+SOCIAL_AUTH_GITHUB_KEY = 'Iv1.d930ff6760a6bff9'
+
+SOCIAL_AUTH_GITHUB_SECRET = '012c348e9f2c082563ad9b560abbc0817cfb61ac'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

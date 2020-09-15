@@ -1,21 +1,21 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
 {% for users in users %}
-<article class="media content-section">
+    {% if users.user_role != 'Project Manager' %}
+        <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                 <a class="mr-2" href="#"><b>UserRole:</b> {{ users.user_role }} </a>
-                <small class="text-muted"></small>
+                    <a class="mr-2" href="#"><b>UserRole:</b> {{ users.user_role }} </a>
+                    <small class="text-muted"></small>
                 </div>
                 <h2><a class="article-content"><b>Name:</b>{{ users.name }}</a></h2>
                 <p class="article-content"><b>Github:</b>{{ users.github_username }}</p>
-                {% if users.user_role != 'Project Manager' %}
-                    <p class="article-content"><b>Rating:</b> {{ users.user_sets.avg_rating }} </p>
-                    <p class="article-content"><b>Sets Completed: {{ users.user_sets.sets_completed }}</b></p>
-                    <p class="article-content"><b>Pages Completed:</b> {{ users.user_sets.pages_completed }}</p>
-                {% endif %}
+                <p class="article-content"><b>Rating:</b> {{ users.user_sets.avg_rating }} </p>
+                <p class="article-content"><b>Sets Completed: {{ users.user_sets.sets_completed }}</b></p>
+                <p class="article-content"><b>Pages Completed:</b> {{ users.user_sets.pages_completed }}</p>
             </div>
         </article>
+    {% endif %}
 {% endfor %}
 {% endblock content %}
 

@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'IIT_OpenOCR/main.css' %}">
 
     {% if title %}
-    <title>IIT_OpenOCR-{{ title }}</title>
+    <title>Akshar Anveshini</title>
     {% else %}
     <title>IIT_OpenOCR</title>
     {% endif %}
@@ -22,7 +22,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-      <a class="navbar-brand mr-4" href="/">IIT-B OpenOCR</a>
+      <a class="navbar-brand mr-4" href="/">Akshar Anveshini</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
@@ -33,7 +33,7 @@
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="#">Login</a>
+          <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Logout</a>
       <!--    <a class="nav-item nav-link" href="#">Register</a>    -->
         </div>
       </div>

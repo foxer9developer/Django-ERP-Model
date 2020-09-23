@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.redirects',
     'social_django',
-    'accounts',
+    'accounts'
 ]
 
 SITE_ID = 1

@@ -3,7 +3,6 @@ from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from IIT_OpenOCR.models import users
-
 from .forms import RegisterationForm, loginForm
 
 from django.contrib import messages

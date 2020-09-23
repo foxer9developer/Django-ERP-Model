@@ -32,6 +32,9 @@ class book(models.Model):
     book_totalpages = models.BigIntegerField()
     book_progress = models.CharField(max_length=20 , choices=progress_choices , default="Unassigned")
 
+    def __str__(self):
+        return self.book_id
+
 class sets(models.Model):
     setID = models.CharField(max_length=120, unique=True)
     number = models.IntegerField()
@@ -46,3 +49,6 @@ class sets(models.Model):
     assignmentdate = models.DateField(default= timezone.now)
     lastsubdate = models.DateField()
     finalsubdate = models.DateField()
+
+    def __str__(self):
+        return self.setID

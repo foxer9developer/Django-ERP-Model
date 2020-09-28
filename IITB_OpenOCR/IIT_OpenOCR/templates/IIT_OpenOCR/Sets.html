@@ -1,49 +1,30 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
-<div class="btn-group">
-  <button class="btn btn-secondary dropdown-toggle mb-3 mr-3" type="button" id="setIDFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Set-ID
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">ID-1</a>
-    <a class="dropdown-item" href="#">ID-2</a>
-    <a class="dropdown-item" href="#">ID-3</a>
-  </div>
-</div>
+<nav class="navbar navbar-light bg-light mb-3">
+    <div class="btn-group mr-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="bookStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Book-Status</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Completed</a>
+            <a class="dropdown-item" href="#">In Progress</a>
+        </div>
+    </div>
 
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3 mr-3" type="button" id="bookIDFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Book-ID
-  </button>
+    <div class="btn-group mr-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="statusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Status of Set</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Completed</a>
+            <a class="dropdown-item" href="#">In-Progress</a>
+        </div>
+    </div>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Book ID</a>
-    <a class="dropdown-item" href="#">Book ID</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
+    <form class="form-inline">
+        <input class="form-control" type="search" placeholder="Search BookName of Set" aria-label="Search">
+        <button class="btn btn-outline-success ml-1" type="submit">Search</button>
+    </form>
 
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3 mr-3" type="button" id="statusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Status
-  </button>
-
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Completed</a>
-    <a class="dropdown-item" href="#">In-Progress</a>
-  </div>
-</div>
-
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3" type="button" id="userRoleFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select UserRole
-  </button>
-
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Corrector</a>
-    <a class="dropdown-item" href="#">Verifier</a>
-  </div>
-</div>
+</nav>
 
 {% for sets in sets %}
         <article class="media content-section">

@@ -4,10 +4,11 @@ from .models import sets
 from .models import book
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from github import Github
 from django.http import HttpResponse
 
-
+@login_required
 def books(request):
     if request.user.is_authenticated:
         count = users.objects.filter(github_username = request.user.username).count()
@@ -39,10 +40,11 @@ def spcific_user(request):
         'title':'user101'
     }
     return render(request,'IIT_OpenOCR/specificuser.html',context)
-
+@login_required
 def assign_user(request):
     return HttpResponse("AssignUser Page")
 
+@login_required
 def search_user(request):
     context = {
         'title':'Users',
@@ -50,12 +52,14 @@ def search_user(request):
     }
     return render(request,'IIT_OpenOCR/userspage.html', context)
 
+@login_required
 def sets_detail(request):
     context = {
         'title':'Sets',
         'sets': sets.objects.all()
             }
     return render(request,'IIT_OpenOCR/Sets.html', context)
+
 
 def book_update(request):
     return HttpResponse("Book Update")

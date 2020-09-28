@@ -30,7 +30,8 @@ class book(models.Model):
     book_id = models.CharField(max_length=120, unique=True)
     book_name = models.CharField(max_length=120)
     book_totalpages = models.BigIntegerField()
-    book_progress = models.CharField(max_length=20 , choices=progress_choices , default="Unassigned")
+    book_totalsets = models.IntegerField(default=0)
+    book_setCompleted = models.IntegerField(default=0)
 
     def __str__(self):
         return self.book_id
@@ -52,3 +53,10 @@ class sets(models.Model):
 
     def __str__(self):
         return self.setID
+
+class log(models.Model):
+    logID= models.CharField(max_length=50, unique=True)
+    log_setID= models.ForeignKey(sets, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.logID

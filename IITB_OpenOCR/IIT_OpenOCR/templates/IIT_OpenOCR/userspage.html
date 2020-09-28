@@ -1,18 +1,10 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3 mr-3" type="button" id="userIDFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select UserID
-  </button>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">ID-1</a>
-    <a class="dropdown-item" href="#">ID-2</a>
-  </div>
-</div>
+<nav class="navbar navbar-light bg-light mb-3">
 
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3 mr-3" type="button" id="userRoleFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <div class="btn-group mr-3">
+    <button class="btn btn-secondary dropdown-toggle mr-3" type="button" id="userRoleFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Select UserRole
   </button>
 
@@ -22,8 +14,8 @@
   </div>
 </div>
 
-<div class="btn-group">
-    <button class="btn btn-secondary dropdown-toggle mb-3" type="button" id="userStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="btn-group mr-3">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="userStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Select User Status
   </button>
 
@@ -33,9 +25,16 @@
   </div>
 </div>
 
+  <form class="form-inline ml-3">
+    <input class="form-control" type="search" placeholder="Search UserName" aria-label="Search">
+    <button class="btn btn-outline-success ml-1" type="submit">Search</button>
+  </form>
+</nav>
+
+
 {% for users in users %}
     {% if users.user_role != 'Project Manager' %}
-<div class="card" style="width: 15rem;">
+<div class="card mb-2" style="width: 15rem;">
   <div class="card-body">
       <h5 class="card-title"><b>Name:</b>{{ users.name }}</h5>
       <p class="card-text"><b>UserRole:</b>{{ users.user_role }}</p>

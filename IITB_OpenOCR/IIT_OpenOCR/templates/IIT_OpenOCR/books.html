@@ -28,13 +28,64 @@
                     <small class="text-muted"></small>
                 </div>
                 <h2><a class="article-content"><b>Book Name: </b>{{ book.book_name }}</a></h2>
+                <div class="row">
+                <div class="column mr-5 ml-3">
                 <p class="article-content"><b>Total Pages: </b>{{ book.book_totalpages }}</p>
                 <p class="article-content"><b>Total Sets: </b>{{ book.book_totalsets }} </p>
                 <p class="article-content"><b>Completed Sets: </b>{{ book.book_setCompleted }}</p>
                 <p class="article-content"><b>Book Status: </b>{{ book.book_status }}</p>
+                </div>
+                <div class="column">
+                    <div class="ml-5" style="display:block; max-height:120px; overflow-y:auto; position: relative;">
+                        <table class="table table-bordered  table-hover table-sm mb-0" style="border-collapse: collapse; width: 100%;">
+                            <thead class="thead-light">
+                            <tr>
+                            <th style="position: sticky; top: 0; padding: 8px 16px;">Set Number</th>
+                            <th style="position: sticky; top: 0; padding: 8px 16px;">Set-ID</th>
+                            <th style="position: sticky; top: 0; padding: 8px 16px;">Set Status</th>
+                            <th style="position: sticky; top: 0; padding: 8px 16px;">Version</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <td><a href="#">abcd</a></td>
+                            <td><a href="#">efgh</a></td>
+                            <td><a href="#">adfc</a></td>
+                            <td><a href="#">twow</a></td>
+                            </tr>
+
+                            <tr>
+                            <td><a href="#">abcd</a></td>
+                            <td><a href="#">efgh</a></td>
+                            <td><a href="#">adfc</a></td>
+                            <td><a href="#">twow</a></td>
+                            </tr>
+
+                            <tr>
+                            <td><a href="#">abcd</a></td>
+                            <td><a href="#">efgh</a></td>
+                            <td><a href="#">adfc</a></td>
+                            <td><a href="#">twow</a></td>
+                            </tr>
+
+                            <tr>
+                            <td><a href="#">abcd</a></td>
+                            <td><a href="#">efgh</a></td>
+                            <td><a href="#">adfc</a></td>
+                            <td><a href="#">twow</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+
+
                 <div class="progress">
                 <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
+
+
              <!--   <p class="article-content"><b>Sets Created: {{ users.user_sets.sets_completed }}</b></p>
                 <p class="article-content"><b>Sets Completed:</b> {{ users.user_sets.pages_completed }}</p> -->
             </div>

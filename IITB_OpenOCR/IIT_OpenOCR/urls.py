@@ -3,7 +3,8 @@ from IIT_OpenOCR import views as iitviews
 
 
 urlpatterns = [
-    path('', iitviews.books ,name='IITB_OpenOCR-Bookspage'),
+    path('', iitviews.home ,name='IITB_OpenOCR-Homepage'),
+    path('books/',iitviews.bookpage,name='IITB_OpenOCR-Bookspage'),
     path('book_update/',iitviews.book_update,name='IITB_OpenOCR-BookUpdate'),
     path('sets/',iitviews.sets_detail,name='IITB_OpenOCR-Sets'),
     path('users/',iitviews.search_user, name='IITB_OpenOCR-UsersPage'),

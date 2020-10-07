@@ -9,7 +9,7 @@ from github import Github
 from django.http import HttpResponse
 
 @login_required
-def books(request):
+def home(request):
     if request.user.is_authenticated:
         count = users.objects.filter(github_username = request.user.username).count()
         social = request.user.social_auth.get(provider='github')
@@ -25,21 +25,47 @@ def books(request):
             return redirect('/register')
     else:
         return redirect('/login')
-
     context = {
-        'title':'Books',
-        'books': book.objects.all()
-            }
+        'title': 'Home'
+    }
     return render(request,'IIT_OpenOCR/home.html',context)
 
-def about(request):
-    return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
+@login_required
+def bookpage(request):
+    bstatus = request.GET.get('bookStatus')
+    if(bstatus=="Completed"):
+        context = {
+            'title': 'CompletedBooks',
+            'books': book.objects.filter(book_status="completed")
+        }
+        return render(request, 'IIT_OpenOCR/books.html', context)
+    elif (bstatus == "InProgress"):
+        context = {
+            'title': 'BooksInProgress',
+            'books': book.objects.filter(book_status="In Progress")
+        }
+        return render(request, 'IIT_OpenOCR/books.html', context)
+    elif (bstatus == "All"):
+        context = {
+        'title': 'Books',
+        'books': book.objects.all()
+        }
+        return render(request,'IIT_OpenOCR/books.html',context)
+    elif (bstatus == "Unassigned"):
+        context = {
+        'title': 'Books',
+        'books': book.objects.filter(book_status="Unassigned")
+        }
+        return render(request,'IIT_OpenOCR/books.html',context)
+    else:
+        context = {
+            'title': 'Books',
+            'books': book.objects.all()
+        }
+        return render(request, 'IIT_OpenOCR/books.html', context)
 
-def spcific_user(request):
-    context = {
-        'title':'user101'
-    }
-    return render(request,'IIT_OpenOCR/specificuser.html',context)
+
+
 @login_required
 def assign_user(request):
     return HttpResponse("AssignUser Page")
@@ -60,6 +86,16 @@ def sets_detail(request):
             }
     return render(request,'IIT_OpenOCR/Sets.html', context)
 
+
+#development
+def about(request):
+    return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
+
+def spcific_user(request):
+    context = {
+        'title':'user101'
+    }
+    return render(request,'IIT_OpenOCR/specificuser.html',context)
 
 def book_update(request):
     return HttpResponse("Book Update")

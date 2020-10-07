@@ -1,43 +1,82 @@
-{% extends "IIT_OpenOCR/base.html" %}
-{% block content %}
-<nav class="navbar navbar-light bg-light mb-3">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div class="btn-group mr-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="bookStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Book-Status</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Completed</a>
-            <a class="dropdown-item" href="#">In Progress</a>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- END Bootstrap-->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'IIT_OpenOCR/main.css' %}">
+
+    {% if title %}
+    <title>Akshar Anveshini-{{ title }}</title>
+    {% else %}
+    <title>Akshar Anveshini</title>
+    {% endif %}
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+      <a class="navbar-brand mr-4" href="/">Akshar Anveshini</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+          <a class="nav-item nav-link" href="{% url 'IITB_OpenOCR-Homepage' %}">Home</a> <!-- name from urls. project -->
         </div>
+        <!-- Navbar Right Side -->
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+      <!--    <a class="nav-item nav-link" href="#">Register</a>    -->
+        </div>
+      </div>
+        </div>
+        </nav>
+    </header>
+<main role="main" class="container">
+  <div class="col d-flex justify-content-center row d-flex justify-content-center">
+
+    <h1 class="mb-5 mr-5">Akshar Anveshini</h1>
+      <h1 class="mb-5">Please select one of the following to proceed</h1>
+
+    <div class="card-group ">
+  <div class="card mr-3 align-middle">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Books</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <a href="{% url 'IITB_OpenOCR-Bookspage' %}" class="card-link">Books</a>
     </div>
-
-    <form class="form-inline">
-        <input class="form-control" type="search" placeholder="Search BookName" aria-label="Search">
-        <button class="btn btn-outline-success ml-1" type="submit">Search</button>
-    </form>
-
-</nav>
-
-{% for book in books %}
-        <article class="media content-section mb-2">
-            <div class="media-body">
-                <div class="article-metadata">
-                    <a class="mr-2" ><b>BookID: </b>{{ book.book_id }} </a>
-                    <small class="text-muted"></small>
-                </div>
-                <h2><a class="article-content"><b>Book Name: </b>{{ book.book_name }}</a></h2>
-                <p class="article-content"><b>Total Pages: </b>{{ book.book_totalpages }}</p>
-                <p class="article-content"><b>Total Sets: </b>{{ book.book_totalsets }} </p>
-                <p class="article-content"><b>Completed Sets: </b>{{ book.book_setCompleted }} </p>
-                <div class="progress">
-                <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-             <!--   <p class="article-content"><b>Sets Created: {{ users.user_sets.sets_completed }}</b></p>
-                <p class="article-content"><b>Sets Completed:</b> {{ users.user_sets.pages_completed }}</p> -->
-            </div>
-        </article>
-{% endfor %}
-{% endblock content %}
-
-
-
+  </div>
+  <div class="card mr-3 align-middle">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Sets</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <a href="{% url 'IITB_OpenOCR-Sets' %}" class="card-link">Sets</a>
+    </div>
+  </div>
+  <div class="card align-middle">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Users</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <a href="{% url 'IITB_OpenOCR-UsersPage' %}" class="card-link">Users</a>
+    </div>
+  </div>
+</div>
+  </div>
+</main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

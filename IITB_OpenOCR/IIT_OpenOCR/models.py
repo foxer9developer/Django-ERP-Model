@@ -25,14 +25,14 @@ class users(models.Model):
 
 
 progress_choices=(("Completed","Completed"),("In Process","In Process"),("Unassigned","Unassigned"))
-
+book_progress=(("completed","completed"),("In Progress","In Progress"),("Unassigned","Unassigned"))
 class book(models.Model):
     book_id = models.CharField(max_length=120, unique=True)
     book_name = models.CharField(max_length=120)
     book_totalpages = models.BigIntegerField()
     book_totalsets = models.IntegerField(default=0)
     book_setCompleted = models.IntegerField(default=0)
-
+    book_status = models.CharField(max_length=50, default="Unassigned", choices=book_progress)
     def __str__(self):
         return self.book_id
 

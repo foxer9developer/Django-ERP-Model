@@ -1,0 +1,143 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+<h4 class="align-middle">Set Update</h4>
+
+<form>
+     <!--- ###############SET DETAILS########################-->
+   <div class="row mt-2"><h5>Set Details:</h5></div>
+      <div class="row mt-4 col-dm-9">
+          <div class="column">
+<label><b>Corrector:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatableCorrector" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Verifier</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatableVerifier" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Version</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatableVersion" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Status</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Pages</b></label>
+      <input type="text" readonly class="form-control-plaintext" value="From DB">
+    </div>
+          </div>
+
+
+     <!--- ###############DATEs########################-->
+        <div class="row mt-2"><h5>Assignment Details:</h5></div>
+    <div class="row mt-4 col-dm-9">
+          <div class="column">
+<label><b>Assignment Detail</b></label>
+      <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Deadline</b></label>
+      <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Submitted Date:</b></label>
+      <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate" value="From DB">
+    </div>
+          </div>
+
+
+    <!--- ###############RATINGs########################-->
+    <div class="row mt-2"><h5>Ratings:</h5></div>
+    <div class="row mt-4 col-dm-9">
+          <div class="column">
+<label><b>Version-1:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatablerating1" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Version-2:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatablerating2" value="From DB">
+    </div>
+        <div class="column">
+<label><b>Version-3:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="updatablerating3" value="From DB">
+    </div>
+
+        <div class="column">
+            <label><b>First Time 5 Rating?:</b></label>
+        <div class="btn-group ml-1 mr-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="bookRatinginput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" >Yes</a>
+            <a class="dropdown-item" >No</a>
+        </div>
+        </div>
+    </div>
+          </div>
+
+    <!--############# Corrector Payments############-->
+    <div class="row mt-2"><h5>Corrector Payment:</h5></div>
+    <div class="row mt-4 col-dm-9">
+          <div class="column">
+<label><b>Rate per Page:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="correctorRate" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Total Amount</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="correctorAmount" value="From DB">
+    </div>
+
+        <div class="column">
+            <label><b>Amount Paid?:</b></label>
+        <div class="btn-group ml-1 mr-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="correctorAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" >Yes</a>
+            <a class="dropdown-item" >No</a>
+        </div>
+        </div>
+    </div>
+          </div>
+
+    <!--############# Verifier Payments############-->
+    <div class="row mt-2"><h5>Corrector Payment:</h5></div>
+    <div class="row mt-4 col-dm-9">
+          <div class="column">
+<label><b>Rate per Page:</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="verifierRate" value="From DB">
+    </div>
+           <div class="column">
+<label><b>Total Amount</b></label>
+      <input type="text" readonly class="form-control-plaintext" id="verifierAmount" value="From DB">
+    </div>
+
+        <div class="column">
+            <label><b>Amount Paid?:</b></label>
+        <div class="btn-group ml-1 mr-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="verifierAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" >Yes</a>
+            <a class="dropdown-item" >No</a>
+        </div>
+        </div>
+    </div>
+          </div>
+
+    <!-----##BUTTONS ROW##-->
+
+    <div class="row mt-5 col-dm-9">
+        <div class="column mr-2">
+        <button type="button" class="btn btn-success">Save</button>
+            </div>
+        <div class="column">
+        <button type="button" class="btn btn-warning">Cancel</button>
+            </div>
+    </div>
+
+</form>
+
+
+{% endblock content %}

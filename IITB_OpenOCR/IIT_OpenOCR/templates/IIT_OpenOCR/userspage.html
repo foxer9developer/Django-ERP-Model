@@ -34,12 +34,13 @@
 
 {% for users in users %}
     {% if users.user_role != 'Project Manager' %}
+<a href="#">
 <div class="card mb-2" style="width: 15rem;">
   <div class="card-body">
-      <h5 class="card-title"><b>Name:</b>{{ users.name }}</h5>
-      <p class="card-text"><b>UserRole:</b>{{ users.user_role }}</p>
-      <p class="card-text"><b>GitHub:</b>{{ users.github_username }}</p>
-      <p class="card-text"><b>Email-ID:</b>{{users.user_email}}</p>
+      <h5 class="card-title text-secondary"><b class="text-dark">Name: </b>{{ users.name }}</h5>
+      <p class="card-text text-secondary"><b class="text-dark">UserRole: </b>{{ users.user_role }}</p>
+      <p class="card-text text-secondary"><b class="text-dark">GitHub: </b>{{ users.github_username }}</p>
+      <p class="card-text text-secondary"><b class="text-dark">Email-ID: </b>{{users.user_email}}</p>
       {% if users.user_sets.setID != '' %}
       <span class="badge badge-pill badge-warning" style="border-radius:15px;"><b> Assigned</b></span>
       {% else %}
@@ -47,6 +48,7 @@
       {% endif %}
   </div>
 </div>
+</a>
      {% endif %}
 {% endfor %}
 {% endblock content %}

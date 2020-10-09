@@ -72,11 +72,18 @@ def assign_user(request):
 
 @login_required
 def search_user(request):
+        context = {
+            'title':'Users',
+            'users': users.objects.all()
+        }
+        return render(request,'IIT_OpenOCR/userspage.html', context)
+
+@login_required
+def set_update(request):
     context = {
-        'title':'Users',
-        'users': users.objects.all()
+        'title': 'update'
     }
-    return render(request,'IIT_OpenOCR/userspage.html', context)
+    return render(request, 'IIT_OpenOCR/setsUpdate.html', context)
 
 @login_required
 def sets_detail(request):
@@ -91,6 +98,7 @@ def sets_detail(request):
 def about(request):
     return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
 
+@login_required
 def spcific_user(request):
     context = {
         'title':'user101'
@@ -103,5 +111,4 @@ def book_update(request):
 def set_log(request):
     return HttpResponse("set log")
 
-def set_update(request):
-    return HttpResponse("Set Update")
+

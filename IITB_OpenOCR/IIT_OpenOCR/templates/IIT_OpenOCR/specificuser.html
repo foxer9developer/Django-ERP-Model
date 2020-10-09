@@ -14,7 +14,7 @@
   <div class="form-group row">
     <label for="staticName" class="col-sm-2 col-form-label mb-3"><b>Name:</b></label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticName" value="Set as a variable from database">
+      <input type="text" readonly class="form-control-plaintext" id="staticName" value=" {{ user.name }}">
     </div>
   </div>
   <div class="form-group row">
@@ -26,19 +26,19 @@
   <div class="form-group row">
     <label for="staticUserRole" class="col-sm-2 col-form-label mb-3"><b>UserRole:</b></label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticUserRole" value="Set as a variable from database">
+      <input type="text" readonly class="form-control-plaintext" id="staticUserRole" value="{{ user.user_role }}">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticGithub" class="col-sm-2 col-form-label mb-3"><b>Github:</b></label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticGithub" value="Set as a variable from database">
+      <input type="text" readonly class="form-control-plaintext" id="staticGithub" value="{{ user.github_username }}">
     </div>
   </div>
         <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label mb-3"><b>Github:</b></label>
+    <label for="staticEmail" class="col-sm-2 col-form-label mb-3"><b>Email:</b>{{ users.user_email }}</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="Set as a variable from database">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ users.user_email }}">
     </div>
   </div>
 </form>

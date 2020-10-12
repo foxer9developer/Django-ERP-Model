@@ -72,11 +72,31 @@ def assign_user(request):
 
 @login_required
 def search_user(request):
-        context = {
+        selected_role = request.GET.get('userrole')
+        if(selected_role == "Corrector"):
+            context = {
+                 'title': 'Corrector',
+                 'users': users.objects.filter(user_role="Corrector")
+            }
+            return render(request, 'IIT_OpenOCR/userspage.html', context)
+        elif(selected_role == "Verifier"):
+            context = {
+                 'title': 'Verifier',
+                 'users': users.objects.filter(user_role="Verifier")
+            }
+            return render(request, 'IIT_OpenOCR/userspage.html', context)
+        elif (selected_role == "All"):
+            context = {
+                'title': 'Users',
+                'users': users.objects.all()
+            }
+            return render(request, 'IIT_OpenOCR/userspage.html', context)
+        else:
+            context = {
             'title':'Users',
             'users': users.objects.all()
-        }
-        return render(request,'IIT_OpenOCR/userspage.html', context)
+            }
+            return render(request,'IIT_OpenOCR/userspage.html', context)
 
 @login_required
 def set_update(request):

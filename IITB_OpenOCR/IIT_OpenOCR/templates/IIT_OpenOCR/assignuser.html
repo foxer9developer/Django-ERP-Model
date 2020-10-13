@@ -3,17 +3,6 @@
 
 <nav class="navbar navbar-light bg-light mb-3">
 
-   <div class="btn-group mr-3">
-    <button class="btn btn-secondary dropdown-toggle mr-3" type="button" id="userRoleFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select UserRole
-  </button>
-
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="/users/?userrole=All">All</a>
-      <a class="dropdown-item" href="/users/?userrole=Corrector">Corrector</a>
-      <a class="dropdown-item" href="/users/?userrole=Verifier">Verifier</a>
-  </div>
-</div>
 
 <div class="btn-group mr-3">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="userStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,7 +16,7 @@
 </div>
 
   <form class="form-inline ml-3">
-    <input class="form-control" type="search" name="searchBar_user" placeholder="Search UserName" aria-label="Search">
+    <input class="form-control" type="search" name="searchBar_corrector" placeholder="Search UserName" aria-label="Search">
     <button class="btn btn-outline-success ml-1" type="submit">Search</button>
   </form>
 </nav>
@@ -35,7 +24,7 @@
 
 {% for users in users %}
     {% if users.user_role != 'Project Manager' %}
-<a href="/users/{{ users.github_username }}">
+<a href="#">
 <div class="card mb-2" style="width: 15rem;">
   <div class="card-body">
       <h5 class="card-title text-secondary"><b class="text-dark">Name: </b>{{ users.name }}</h5>

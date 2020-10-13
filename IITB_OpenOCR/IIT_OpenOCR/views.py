@@ -33,70 +33,90 @@ def home(request):
 @login_required
 def bookpage(request):
     bstatus = request.GET.get('bookStatus')
+    query_bookName = request.GET.get('searchBar_book')
     if(bstatus=="Completed"):
         context = {
             'title': 'CompletedBooks',
             'books': book.objects.filter(book_status="completed")
         }
-        return render(request, 'IIT_OpenOCR/books.html', context)
     elif (bstatus == "InProgress"):
         context = {
             'title': 'BooksInProgress',
             'books': book.objects.filter(book_status="In Progress")
         }
-        return render(request, 'IIT_OpenOCR/books.html', context)
     elif (bstatus == "All"):
         context = {
         'title': 'Books',
         'books': book.objects.all()
         }
-        return render(request,'IIT_OpenOCR/books.html',context)
     elif (bstatus == "Unassigned"):
         context = {
         'title': 'Books',
         'books': book.objects.filter(book_status="Unassigned")
         }
-        return render(request,'IIT_OpenOCR/books.html',context)
+    elif (query_bookName != '' and query_bookName is not None):
+        context = {
+            'books': book.objects.filter(book_name__icontains=query_bookName)
+        }
+    elif (query_bookName != '' and query_bookName is not None):
+        context = {
+            'title': 'Searching books',
+            'books': book.objects.filter(book_name__icontains=query_bookName)
+        }
     else:
         context = {
             'title': 'Books',
             'books': book.objects.all()
         }
-        return render(request, 'IIT_OpenOCR/books.html', context)
+    return render(request, 'IIT_OpenOCR/books.html', context)
 
 
 
 @login_required
 def assign_user(request):
-    return HttpResponse("AssignUser Page")
+    query_userName = request.GET.get('searchBar_corrector')
+    if query_userName != '' and query_userName is not None:
+        context = {
+            'title': 'Assign Searched Corrector',
+            'users': users.objects.filter(name__icontains=query_userName)
+        }
+    else:
+        context = {
+            'title': 'Assign Corrector',
+            'users': users.objects.filter(user_role="Corrector")
+        }
+    render(request, 'IIT_OpenOCR/assignuser.html', context)
 
 @login_required
 def search_user(request):
         selected_role = request.GET.get('userrole')
+        query_userName = request.GET.get('searchBar_user')
         if(selected_role == "Corrector"):
             context = {
                  'title': 'Corrector',
                  'users': users.objects.filter(user_role="Corrector")
             }
-            return render(request, 'IIT_OpenOCR/userspage.html', context)
         elif(selected_role == "Verifier"):
             context = {
                  'title': 'Verifier',
                  'users': users.objects.filter(user_role="Verifier")
             }
-            return render(request, 'IIT_OpenOCR/userspage.html', context)
         elif (selected_role == "All"):
             context = {
                 'title': 'Users',
                 'users': users.objects.all()
             }
-            return render(request, 'IIT_OpenOCR/userspage.html', context)
+        elif query_userName != '' and query_userName is not None:
+            context = {
+                'title': 'Searched User',
+                'users': users.objects.filter(name__icontains=query_userName)
+            }
         else:
             context = {
-            'title':'Users',
-            'users': users.objects.all()
+                'title': 'Users',
+                'users': users.objects.all()
             }
-            return render(request,'IIT_OpenOCR/userspage.html', context)
+        return render(request, 'IIT_OpenOCR/userspage.html', context)
 
 @login_required
 def set_update(request):
@@ -107,11 +127,18 @@ def set_update(request):
 
 @login_required
 def sets_detail(request):
-    context = {
-        'title':'Sets',
-        'sets': sets.objects.all()
-            }
-    return render(request,'IIT_OpenOCR/Sets.html', context)
+    query_book_setspage = request.GET.get('searchBar_book_setspage')
+    if query_book_setspage != '' and query_book_setspage is not None:
+        context = {
+            'title': 'Searching Book in Sets',
+            'sets': sets.objects.filter(bookid__book_name__icontains=query_book_setspage)
+        }
+    else:
+        context = {
+            'title': 'Sets',
+            'sets': sets.objects.all()
+        }
+    return render(request, 'IIT_OpenOCR/Sets.html', context)
 
 
 #development
@@ -119,11 +146,15 @@ def about(request):
     return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
 
 @login_required
-def spcific_user(request):
+def spcific_user(request, g_username):
+    clicked_user = users.objects.filter(github_username=g_username)
+    #fetch clicked user
     context = {
-        'title':'user101'
+        'title': g_username,
+        'clicked': clicked_user[0]
     }
     return render(request,'IIT_OpenOCR/specificuser.html',context)
+
 
 def book_update(request):
     return HttpResponse("Book Update")

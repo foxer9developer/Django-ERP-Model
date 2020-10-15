@@ -45,7 +45,21 @@
     </div>
     <div id="assignedSets" class="tab-pane fade">
       <h3>Sets</h3>
-      <p>input the link of Set's page with userID and show corresponding sets</p>
+      {% for sets in sets %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2"><b>Version</b> {{ sets.version }} &nbsp; <b>Status</b>:{{sets.status}}</a>
+                    <small class="text-muted"></small>
+                </div>
+                <h2><a class="article-content"><b>SetID:</b>{{ sets.setID }}</a></h2>
+                <p class="article-content"><b>SetCorrector:</b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier:</b> {{ sets.setVerifier.name }}</p>
+                <p class="article-content"><b>Assigned Date</b> {{ sets.assignmentdate }} &nbsp;<b>Deadline</b> {{ sets.deadline }}</p>
+                <p class="article-content"><b>Book Name:</b>{{sets.bookid.book_name}}</p>
+                <p class="article-content"><b>Project Manager:</b> {{ sets.projectmanager }}</p>
+            </div>
+        </article>
+{% endfor %}
     </div>
     <div id="assignedBooks" class="tab-pane fade">
       <h3>Books</h3>

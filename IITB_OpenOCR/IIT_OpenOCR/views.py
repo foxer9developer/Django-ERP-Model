@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from IIT_OpenOCR.models import users, SetStatus
+from IIT_OpenOCR.models import users, SetStatus,sets
 from .models import sets
 from .models import book
 from django.contrib import messages
@@ -148,10 +148,12 @@ def about(request):
 @login_required
 def spcific_user(request, g_username):
     clicked_user = users.objects.filter(github_username=g_username)
+    clicked_sets = sets.objects.filter(setCorrector=clicked_user[0])|sets.objects.filter(setVerifier=clicked_user[0])
     #fetch clicked user
     context = {
         'title': g_username,
-        'clicked': clicked_user[0]
+        'clicked': clicked_user[0],
+        'sets':clicked_sets
     }
     return render(request,'IIT_OpenOCR/specificuser.html',context)
 

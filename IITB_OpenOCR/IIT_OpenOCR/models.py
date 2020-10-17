@@ -23,8 +23,7 @@ class users(models.Model):
     def __str__(self):
         return self.name
 
-
-progress_choices=(("Completed","Completed"),("In Process","In Process"),("Unassigned","Unassigned"))
+status_choices=(("Set OCRed","Set OCRed"),("In Process","In Process"),("Unassigned","Unassigned"))
 book_progress=(("completed","completed"),("In Progress","In Progress"),("Unassigned","Unassigned"))
 class book(models.Model):
     book_id = models.CharField(max_length=120, unique=True)
@@ -40,16 +39,20 @@ class sets(models.Model):
     setID = models.CharField(max_length=120, unique=True)
     number = models.IntegerField()
     bookid = models.ForeignKey(book , on_delete= models.PROTECT)
-    setCorrector = models.ForeignKey(users, related_name='set_corrector',limit_choices_to={'user_role': "Corrector"},on_delete= models.PROTECT)
-    setVerifier = models.ForeignKey(users, related_name='set_verifier', limit_choices_to={'user_role': "Verifier"}, on_delete= models.PROTECT)
+    setCorrector = models.ForeignKey(users, related_name='set_corrector',limit_choices_to={'user_role': "Corrector"},on_delete= models.PROTECT,null=True,blank=True)
+    setVerifier = models.ForeignKey(users, related_name='set_verifier', limit_choices_to={'user_role': "Verifier"}, on_delete= models.PROTECT,null=True,blank=True)
     projectmanager = models.ForeignKey(users ,related_name='set_projectmanager', limit_choices_to={'user_role': "Project Manager"},  on_delete= models.PROTECT)
     repoistorylink = models.URLField()
     status = models.CharField(max_length=120)
-    version = models.IntegerField()
-    deadline = models.DateField()
-    assignmentdate = models.DateField(default= timezone.now)
-    lastsubdate = models.DateField()
-    finalsubdate = models.DateField()
+    version = models.IntegerField(null=True,blank=True)
+    deadline = models.DateField(null=True,blank=True)
+    vone_assignmentdate = models.DateField(default= timezone.now,null=True,blank=True)
+    vone_expsubdate = models.DateField(null=True,blank=True)
+    vtwo_assignmentdate = models.DateField(null=True,blank=True)
+    vtwo_expsubdate = models.DateField(null=True,blank=True)
+    vthree_assignmentdate = models.DateField(null=True,blank=True)
+    vthree_expsubdate = models.DateField(null=True,blank=True)
+    finalsubdate = models.DateField(null=True,blank=True)
 
     def __str__(self):
         return self.setID

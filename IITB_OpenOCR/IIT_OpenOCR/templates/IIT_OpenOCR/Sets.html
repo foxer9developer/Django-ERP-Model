@@ -34,10 +34,32 @@
                     <small class="text-muted"></small>
                 </div>
                 <h2><a class="article-content"><b>SetID:</b>{{ sets.setID }}</a></h2>
-                <p class="article-content"><b>SetCorrector:</b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier:</b> {{ sets.setVerifier.name }}</p>
-                <p class="article-content"><b>Assigned Date</b> {{ sets.assignmentdate }} &nbsp;<b>Deadline</b> {{ sets.deadline }}</p>
+                {% if not sets.setCorrector.name and not sets.setVerifier.name %}
+                <p class="article-content"><b>Need to Assign Corrector</b></p>
                 <p class="article-content"><b>Book Name:</b>{{sets.bookid.book_name}}</p>
                 <p class="article-content"><b>Project Manager:</b> {{ sets.projectmanager }}</p>
+                <button type="button" class="btn btn-success" >Assign Corrector</button>
+                <button type="button" class="btn btn-primary ml-5" >Update Set</button>
+                <button type="button" class="btn btn-default ml-5" >View SetLog</button>
+                {% endif %}
+                {% if sets.setCorrector.name and not sets.setVerifier.name %}
+                <p class="article-content"><b>SetCorrector:</b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier:</b>Need to Assign Verifier</p>
+                <p class="article-content"><b>Assigned Date:</b> {{ sets.assignmentdate }} &nbsp;<b>Deadline:</b> {{ sets.deadline }}</p>
+                <p class="article-content"><b>Book Name:</b>{{sets.bookid.book_name}}</p>
+                <p class="article-content"><b>Project Manager:</b> {{ sets.projectmanager }}</p>
+                <button type="button" class="btn btn-success " >Assign Verifier</button>
+                    <button type="button" class="btn btn-primary ml-5" >Update Set</button>
+                <button type="button" class="btn btn-default ml-5" >View SetLog</button>
+                    {% endif %}
+                {% if sets.setCorrector.name and sets.setVerifier.name %}
+                <p class="article-content"><b>SetCorrector:</b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier:</b>{{sets.setVerifier.name}}</p>
+                <p class="article-content"><b>Assigned Date:</b> {{ sets.assignmentdate }} &nbsp;<b>Deadline:</b> {{ sets.deadline }}</p>
+                <p class="article-content"><b>Book Name:</b>{{sets.bookid.book_name}}</p>
+                <p class="article-content"><b>Project Manager:</b> {{ sets.projectmanager }}</p>
+                <button type="button" class="btn btn-primary ml-5" >Update Set</button>
+                <button type="button" class="btn btn-default ml-5" >View SetLog</button>
+                {% endif %}
+
             </div>
         </article>
 {% endfor %}

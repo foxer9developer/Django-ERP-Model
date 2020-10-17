@@ -23,22 +23,18 @@
 
 
 {% for users in users %}
-    {% if users.user_role != 'Project Manager' %}
-<a href="#">
+
+<a href="?git_user={{ users.github_username}}&?set={{set}}/">
 <div class="card mb-2" style="width: 15rem;">
   <div class="card-body">
       <h5 class="card-title text-secondary"><b class="text-dark">Name: </b>{{ users.name }}</h5>
       <p class="card-text text-secondary"><b class="text-dark">UserRole: </b>{{ users.user_role }}</p>
       <p class="card-text text-secondary"><b class="text-dark">GitHub: </b>{{ users.github_username }}</p>
       <p class="card-text text-secondary"><b class="text-dark">Email-ID: </b>{{users.user_email}}</p>
-      {% if users.user_sets.setID != '' %}
-      <span class="badge badge-pill badge-warning" style="border-radius:15px;"><b> Assigned</b></span>
-      {% else %}
       <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Idle</b></span>
-      {% endif %}
   </div>
 </div>
 </a>
-     {% endif %}
+
 {% endfor %}
 {% endblock content %}

@@ -37,55 +37,50 @@ def bookpage(request):
     if(bstatus=="Completed"):
         context = {
             'title': 'CompletedBooks',
-            'books': book.objects.filter(book_status="completed")
+            'books': book.objects.filter(book_status="completed"),
+            'sets': sets.objects.all()
         }
     elif (bstatus == "InProgress"):
         context = {
             'title': 'BooksInProgress',
-            'books': book.objects.filter(book_status="In Progress")
-        }
+            'books': book.objects.filter(book_status="In Progress"),
+            'sets': sets.objects.all()
+            }
     elif (bstatus == "All"):
         context = {
-        'title': 'Books',
-        'books': book.objects.all()
-        }
+            'title': 'Books',
+            'books': book.objects.all(),
+            'sets': sets.objects.all()
+            }
     elif (bstatus == "Unassigned"):
         context = {
-        'title': 'Books',
-        'books': book.objects.filter(book_status="Unassigned")
-        }
+            'title': 'Books',
+            'books': book.objects.filter(book_status="Unassigned"),
+            'sets': sets.objects.all()
+            }
     elif (query_bookName != '' and query_bookName is not None):
         context = {
-            'books': book.objects.filter(book_name__icontains=query_bookName)
-        }
+            'title': 'Searched books',
+            'books': book.objects.filter(book_name__icontains=query_bookName),
+            'sets': sets.objects.all()
+            }
     elif (query_bookName != '' and query_bookName is not None):
         context = {
-            'title': 'Searching books',
-            'books': book.objects.filter(book_name__icontains=query_bookName)
-        }
+            'title': 'Searched books',
+            'books': book.objects.filter(book_name__icontains=query_bookName),
+            'sets': sets.objects.all()
+            }
     else:
         context = {
             'title': 'Books',
-            'books': book.objects.all()
-        }
+            'books': book.objects.all(),
+            'sets': sets.objects.all()
+            }
     return render(request, 'IIT_OpenOCR/books.html', context)
-
-
 
 @login_required
 def assign_user(request):
-    query_userName = request.GET.get('searchBar_corrector')
-    if query_userName != '' and query_userName is not None:
-        context = {
-            'title': 'Assign Searched Corrector',
-            'users': users.objects.filter(name__icontains=query_userName)
-        }
-    else:
-        context = {
-            'title': 'Assign Corrector',
-            'users': users.objects.filter(user_role="Corrector")
-        }
-    render(request, 'IIT_OpenOCR/assignuser.html', context)
+    return HttpResponse("Develop")
 
 @login_required
 def search_user(request):
@@ -147,12 +142,13 @@ def about(request):
 
 @login_required
 def spcific_user(request, g_username):
-    clicked_user = users.objects.filter(github_username=g_username)
-    clicked_sets = sets.objects.filter(setCorrector=clicked_user[0])|sets.objects.filter(setVerifier=clicked_user[0])
+    clicked_user = users.objects.get(github_username=g_username)
+    clicked_sets = sets.objects.filter(setCorrector=clicked_user)|sets.objects.filter(setVerifier=clicked_user)
+    books= book.objects.filter()
     #fetch clicked user
     context = {
         'title': g_username,
-        'clicked': clicked_user[0],
+        'clicked': clicked_user,
         'sets':clicked_sets
     }
     return render(request,'IIT_OpenOCR/specificuser.html',context)

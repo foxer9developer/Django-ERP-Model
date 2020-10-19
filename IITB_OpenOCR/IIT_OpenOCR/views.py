@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from IIT_OpenOCR.models import users, SetStatus,sets
+from IIT_OpenOCR.models import users, sets
 from .models import sets
 from .models import book
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import datetime
 from github import Github
 from django.http import HttpResponse
 
@@ -79,12 +80,60 @@ def bookpage(request):
     return render(request, 'IIT_OpenOCR/books.html', context)
 
 @login_required
-def assign_user(request):
-    return HttpResponse("Develop")
+def assign_user(request,setid):
+    clicked_set= sets.objects.get(setID=setid)
+    if(clicked_set.setCorrector):
+        context = {
+            'title': 'Assign Verfier',
+            'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+            'setid': setid
+        }
+    else:
+        context = {
+        'title':'Assign Corrector',
+        'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
+        'setid': setid
+        }
+    return render(request, 'IIT_OpenOCR/assignuser.html',context)
+
+@login_required
+def set_user(request,github_username, setid):
+    clicked_user = users()
+    clicked_user = users.objects.get(github_username=github_username)
+    set_toassign = sets.objects.get(setID=setid)
+    if(set_toassign.setCorrector):
+        set_toassign.setVerifier = clicked_user
+    else:
+        set_toassign.setCorrector =clicked_user
+    if(set_toassign.version):
+        set_toassign.version=1
+        set_toassign.status="Corrector"
+    set_toassign.save()
+    clicked_user.user_status = "Assigned"
+    clicked_user.save()
+    return redirect('/sets')
+
+def assign_verfier(request,github_username,setid):
+    context = {
+        'title': 'Assign Verifier',
+        'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+        'setid': setid
+    }
+    return render(request, 'IIT_OpenOCR/assignuser.html', context)
+
+
+@login_required
+def assign_verifier(request):
+    return HttpResponse("dev")
+
+@login_required
+def set_verifier(request):
+    return HttpResponse("dev")
 
 @login_required
 def search_user(request):
         selected_role = request.GET.get('userrole')
+        selected_status = request.GET.get('userstatus')
         query_userName = request.GET.get('searchBar_user')
         if(selected_role == "Corrector"):
             context = {
@@ -100,6 +149,21 @@ def search_user(request):
             context = {
                 'title': 'Users',
                 'users': users.objects.all()
+            }
+        elif(selected_status =="All"):
+            context = {
+                'title':'All Users',
+                'users': users.objects.all()
+            }
+        elif(selected_status =="Idle"):
+            context = {
+                'title': 'Idle Users',
+                'users': users.objects.filter(user_status="Idle")
+            }
+        elif(selected_status == "Assigned"):
+            context = {
+                'title': 'Assigned Users',
+                'users': users.objects.filter(user_status="Assigned")
             }
         elif query_userName != '' and query_userName is not None:
             context = {

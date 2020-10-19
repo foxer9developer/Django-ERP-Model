@@ -24,7 +24,7 @@
 
 {% for users in users %}
 
-<a href="?git_user={{ users.github_username}}&?set={{set}}/">
+
 <div class="card mb-2" style="width: 15rem;">
   <div class="card-body">
       <h5 class="card-title text-secondary"><b class="text-dark">Name: </b>{{ users.name }}</h5>
@@ -32,9 +32,10 @@
       <p class="card-text text-secondary"><b class="text-dark">GitHub: </b>{{ users.github_username }}</p>
       <p class="card-text text-secondary"><b class="text-dark">Email-ID: </b>{{users.user_email}}</p>
       <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Idle</b></span>
+      <a class="btn btn-success" role="button" href="{{users.github_username}}/">Assign</a>
   </div>
 </div>
-</a>
+
 
 {% endfor %}
 {% endblock content %}

@@ -10,13 +10,14 @@
   </button>
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Idle</a>
-    <a class="dropdown-item" href="#">Set Assigned</a>
+      <a class="dropdown-item" href="?selected=All">All</a>
+    <a class="dropdown-item" href="?selected=Idle">Idle</a>
+    <a class="dropdown-item" href="?selected=Assigned">Set Assigned</a>
   </div>
 </div>
 
   <form class="form-inline ml-3">
-    <input class="form-control" type="search" name="searchBar_corrector" placeholder="Search UserName" aria-label="Search">
+    <input class="form-control" type="search" name="searchBar_assigned" placeholder="Search UserName" aria-label="Search">
     <button class="btn btn-outline-success ml-1" type="submit">Search</button>
   </form>
 </nav>

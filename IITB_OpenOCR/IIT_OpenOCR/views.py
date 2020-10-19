@@ -82,18 +82,70 @@ def bookpage(request):
 @login_required
 def assign_user(request,setid):
     clicked_set= sets.objects.get(setID=setid)
+    selected_user = request.GET.get('selected')
+    searched_user=request.GET.get('searchBar_assigned')
     if(clicked_set.setCorrector):
-        context = {
-            'title': 'Assign Verfier',
+        if(selected_user=="Idle"):
+            context = {
+            'title': 'Assign Verifier',
             'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
             'setid': setid
-        }
+            }
+        elif(selected_user=="Assigned"):
+            context = {
+                'title': 'Assign Verifier',
+                'users': users.objects.filter(user_role="Verifier").filter(user_status="Assigned"),
+                'setid': setid
+            }
+        elif (selected_user == "All"):
+            context = {
+                'title': 'Assign Verifier',
+                'users': users.objects.filter(user_role="Verifier"),
+                'setid': setid
+            }
+        elif searched_user != '' and searched_user is not None:
+            context = {
+                'title': 'Searched User',
+                'users': users.objects.filter(name__icontains=searched_user).filter(user_role="Verifier")
+            }
+        else:
+            context = {
+                'title': 'Assign Verifier',
+                'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+                'setid': setid
+            }
+
     else:
-        context = {
-        'title':'Assign Corrector',
-        'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
-        'setid': setid
-        }
+        if (selected_user == "Idle"):
+            context = {
+            'title':'Assign Corrector',
+            'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
+            'setid': setid
+            }
+        elif (selected_user == "Assigned"):
+            context = {
+                'title': 'Assign Corrector',
+                'users': users.objects.filter(user_role="Corrector").filter(user_status="Assigned"),
+                'setid': setid
+            }
+        elif (selected_user == "All"):
+            context = {
+                'title': 'Assign Corrector',
+                'users': users.objects.filter(user_role="Corrector"),
+                'setid': setid
+            }
+        elif searched_user != '' and searched_user is not None:
+            context = {
+                'title': 'Searched User',
+                'users': users.objects.filter(name__icontains=searched_user).filter(user_role="Corrector")
+            }
+        else:
+            context = {
+                'title': 'Assign Corrector',
+                'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
+                'setid': setid
+            }
+
     return render(request, 'IIT_OpenOCR/assignuser.html',context)
 
 @login_required

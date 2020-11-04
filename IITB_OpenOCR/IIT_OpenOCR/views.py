@@ -161,10 +161,11 @@ def set_user(request,github_username, setid):
     repo = g.get_repo(reponame)
     contents = repo.get_contents("README.md")
     print(contents)
-    repo.add_to_collaborators(github_username,"admin")
     if(set_toassign.setCorrector):
+        repo.add_to_collaborators(github_username, "admin")
         set_toassign.setVerifier = clicked_user
     else:
+        repo.add_to_collaborators(github_username, "admin")
         set_toassign.setCorrector =clicked_user
         set_toassign.status = "Corrector"
     set_toassign.version = 1

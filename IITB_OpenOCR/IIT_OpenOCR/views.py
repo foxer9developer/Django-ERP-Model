@@ -9,6 +9,9 @@ from django.utils.timezone import datetime
 from github import Github
 from django.http import HttpResponse
 
+PMusername="TeamOCR-IITB"
+PMpass="Digit@iitb1"
+
 @login_required
 def home(request):
     if request.user.is_authenticated:
@@ -17,7 +20,7 @@ def home(request):
         access_token = social.extra_data['access_token']
         g = Github(access_token)
         g.get_repos
-        repo = g.get_repo("svtsanoj/Open-OCR-Correct")
+        repo = g.get_repo("TeamOCR-IITB/IITB-ProjectManager")
         contents = repo.get_contents("README.md")
         print(contents)
         if(count != 1):
@@ -109,7 +112,7 @@ def assign_user(request,setid):
                 'users': users.objects.filter(name__icontains=searched_user).filter(user_role="Verifier")
             }
         else:
-            context = {
+            context = { 
                 'title': 'Assign Verifier',
                 'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
                 'setid': setid
@@ -150,21 +153,25 @@ def assign_user(request,setid):
 
 @login_required
 def set_user(request,github_username, setid):
-    clicked_user = users()
+    g = Github(PMusername,PMpass)
+    g.get_repos
     clicked_user = users.objects.get(github_username=github_username)
     set_toassign = sets.objects.get(setID=setid)
+    reponame = set_toassign.repoistoryName
+    repo = g.get_repo(reponame)
+    contents = repo.get_contents("README.md")
+    print(contents)
+    repo.add_to_collaborators(github_username,"admin")
     if(set_toassign.setCorrector):
         set_toassign.setVerifier = clicked_user
     else:
         set_toassign.setCorrector =clicked_user
-    if(set_toassign.version):
-        set_toassign.version=1
-        set_toassign.status="Corrector"
+        set_toassign.status = "Corrector"
+    set_toassign.version = 1
     set_toassign.save()
     clicked_user.user_status = "Assigned"
     clicked_user.save()
     return redirect('/sets')
-
 def assign_verfier(request,github_username,setid):
     context = {
         'title': 'Assign Verifier',
@@ -173,7 +180,7 @@ def assign_verfier(request,github_username,setid):
     }
     return render(request, 'IIT_OpenOCR/assignuser.html', context)
 
-
+0
 @login_required
 def assign_verifier(request):
     return HttpResponse("dev")

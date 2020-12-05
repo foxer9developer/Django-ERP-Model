@@ -42,31 +42,30 @@
                     <p class="article-content"><b>Project Manager: </b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
                     <a href="{{sets.setID}}" class="btn btn-success" role="button">Assign Corrector</a>
-                    <a href="#" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
                 {% endif %}
 
                 <!-- when corrector assigned and verifier needs to be assigned -->
                 {% if sets.setCorrector.name and not sets.setVerifier.name %}
                     <p class="article-content"><b>SetCorrector:</b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier:</b>Need to Assign Verifier</p>
-                    <p class="article-content"><b>Assigned Date:</b>{{ sets.assignmentdate }} &nbsp;<b>Deadline:</b> {{ sets.deadline }}</p>
+                    <p class="article-content"><b>Assigned Date:</b>{{ sets.vone_assignmentdate }} &nbsp;<b>Deadline:</b> {{ sets.vone_deadline }}</p>
                     <p class="article-content"><b>Book Name: </b>{{sets.bookid.book_name}}</p>
                     <p class="article-content"><b>Project Manager: </b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
                     <a href="{{sets.setID}}" class="btn btn-success" role="button">Assign Verifier</a>
-                    <a href="#" class="btn btn-primary ml-3" role="button"  >Update Set</a>
-                    <a href="#" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
                 {% endif %}
                 <!-- when corrector and verifier both assigned -->
                 {% if sets.setCorrector.name and sets.setVerifier.name %}
                     <p class="article-content"><b>SetCorrector: </b>{{ sets.setCorrector.name }}&nbsp;<b>SetVerifier: </b>{{sets.setVerifier.name}}</p>
-                    <p class="article-content"><b>Assigned Date: </b>{{ sets.assignmentdate }} &nbsp;<b>Deadline: </b>{{ sets.deadline }}</p>
+                    <p class="article-content"><b>Assigned Date: </b>{{ sets.vone_assignmentdate }} &nbsp;<b>Deadline: </b>{{ sets.vone_deadline }}</p>
                     <p class="article-content"><b>Book Name: </b>{{sets.bookid.book_name}}</p>
                     <p class="article-content"><b>Project Manager:</b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
-                    <a href="#" class="btn btn-primary ml-3" role="button"  >Update Set</a>
-                    <a href="#" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="/set_update/{{sets.setID}}" class="btn btn-primary ml-3" role="button"  >Update Set</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
                 {% endif %}
-
+               
             </div>
         </article>
 {% endfor %}

@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from IIT_OpenOCR.models import users, sets
-from .models import sets
-from .models import book
+from .models import sets, book
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
 from github import Github
 from django.http import HttpResponse
+from .forms import setsform
+from django.http import QueryDict
 
 PMusername="TeamOCR-IITB"
 PMpass="Digit@iitb1"
@@ -81,7 +82,7 @@ def bookpage(request):
             'sets': sets.objects.all()
             }
     return render(request, 'IIT_OpenOCR/books.html', context)
-
+############################################################################
 @login_required
 def assign_user(request,setid):
     clicked_set= sets.objects.get(setID=setid)
@@ -173,22 +174,23 @@ def set_user(request,github_username, setid):
     clicked_user.user_status = "Assigned"
     clicked_user.save()
     return redirect('/sets')
-def assign_verfier(request,github_username,setid):
-    context = {
-        'title': 'Assign Verifier',
-        'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
-        'setid': setid
-    }
-    return render(request, 'IIT_OpenOCR/assignuser.html', context)
 
-0
-@login_required
-def assign_verifier(request):
-    return HttpResponse("dev")
+# def assign_verfier(request,github_username,setid):
+#     context = {
+#         'title': 'Assign Verifier',
+#         'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+#         'setid': setid
+#     }
+#     return render(request, 'IIT_OpenOCR/assignuser.html', context)
 
-@login_required
-def set_verifier(request):
-    return HttpResponse("dev")
+# # 0
+# @login_required
+# def assign_verifier(request):
+#     return HttpResponse("dev")
+
+# @login_required
+# def set_verifier(request):
+#     return HttpResponse("dev")
 
 @login_required
 def search_user(request):
@@ -238,9 +240,16 @@ def search_user(request):
         return render(request, 'IIT_OpenOCR/userspage.html', context)
 
 @login_required
-def set_update(request):
+def set_update(request, setID):
+    print("entered sets update page")
+
+    print("Set id = ", setID)
+    clicked_set = sets.objects.get(setID = setID)
+    print(clicked_set)
+
     context = {
-        'title': 'update'
+        'title': 'update-set',
+        'sets' : setsform(instance=clicked_set)
     }
     return render(request, 'IIT_OpenOCR/setsUpdate.html', context)
 
@@ -259,8 +268,20 @@ def sets_detail(request):
         }
     return render(request, 'IIT_OpenOCR/Sets.html', context)
 
+@login_required
+def saveset(request, setID):
 
-#development
+    setsID = request.POST.dict()['setID']
+    clicked = sets.objects.get(setID=setsID)
+
+    formobj1 = setsform(request.POST, instance= clicked)
+    if formobj1.is_valid():
+        formobj1.save()
+    else:
+        print("error2 = ",formobj1.errors)
+
+    return redirect('/sets')
+
 def about(request):
     return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
 
@@ -268,7 +289,7 @@ def about(request):
 def spcific_user(request, g_username):
     clicked_user = users.objects.get(github_username=g_username)
     clicked_sets = sets.objects.filter(setCorrector=clicked_user)|sets.objects.filter(setVerifier=clicked_user)
-    books= book.objects.filter()
+    # books= book.objects.filter()
     #fetch clicked user
     context = {
         'title': g_username,
@@ -281,7 +302,10 @@ def spcific_user(request, g_username):
 def book_update(request):
     return HttpResponse("Book Update")
 
-def set_log(request):
-    return HttpResponse("set log")
-
-
+def set_log(request, setID):
+    clicked_set = sets.objects.filter(setID = setID)
+    context = {
+        'title' : 'Sets Log Page',
+        'sets' : clicked_set
+    }
+    return render(request, 'IIT_OpenOCR/setslog.html',context)

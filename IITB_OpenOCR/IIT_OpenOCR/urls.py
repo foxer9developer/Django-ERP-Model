@@ -12,6 +12,7 @@ urlpatterns = [
     path('about/',iitviews.about,name='IITB_OpenOCR-Aboutpage'),
     path('sets/<str:setid>/',iitviews.assign_user,name='IITB_OpenOCR-AssignUser'),
     path('sets/<str:setid>/<str:github_username>/',iitviews.set_user,name='IITB_OpenOCR-SetUser'),
-    path('sets/set_update/',iitviews.set_update,name='IITB_OpenOCR-SetUpdate'),
-    path('sets/set_log/',iitviews.set_log,name='IITB_OpenOCR-SetLog')
+    path('set_update/<str:setID>/',iitviews.set_update,name='IITB_OpenOCR-SetUpdate'),
+    path('saveset/<str:setID>/',iitviews.saveset,name='IITB_OpenOCR-save'),
+    path('set_log/<str:setID>/',iitviews.set_log,name='IITB_OpenOCR-SetLog')
 ]

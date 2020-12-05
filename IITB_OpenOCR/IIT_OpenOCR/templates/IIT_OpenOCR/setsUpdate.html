@@ -1,143 +1,269 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
-<h4 class="align-middle">Set Update</h4>
+<!-- <h2 class="align-middle"><b>Set Update</b></h2> -->
+<h2 class="align-middle"><b>Set Details :</b></h2>
 
-<form>
-     <!--- ###############SET DETAILS########################-->
-   <div class="row mt-2"><h5>Set Details:</h5></div>
+<!-- <form action="{% url 'IITB_OpenOCR-save' sets.setID%}" method="POST"> -->
+      <form action="{% url 'IITB_OpenOCR-save' sets.setID %}" method="POST">
+      {% csrf_token %}
       <div class="row mt-4 col-dm-9">
-          <div class="column">
-<label><b>Corrector:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatableCorrector" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Verifier</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatableVerifier" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Version</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatableVersion" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Status</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Pages</b></label>
-      <input type="text" readonly class="form-control-plaintext" value="From DB">
-    </div>
-          </div>
-
-
-     <!--- ###############DATEs########################-->
-        <div class="row mt-2"><h5>Assignment Details:</h5></div>
-    <div class="row mt-4 col-dm-9">
-          <div class="column">
-<label><b>Assignment Detail</b></label>
-      <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Deadline</b></label>
-      <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Submitted Date:</b></label>
-      <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate" value="From DB">
-    </div>
-          </div>
-
-
-    <!--- ###############RATINGs########################-->
-    <div class="row mt-2"><h5>Ratings:</h5></div>
-    <div class="row mt-4 col-dm-9">
-          <div class="column">
-<label><b>Version-1:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatablerating1" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Version-2:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatablerating2" value="From DB">
-    </div>
+            <div class="column">
+              Set Id : {{sets.setID}}
+        <!-- <label><b>Set Id :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.setID}}</div> -->
+        <!-- <input type="text" readonly class="form-control-plaintext" id="updatableCorrector" value="{{sets.setID}}" style="background-color: darkgray; text-align: center;"> -->
+        </div>
+        <hr>
         <div class="column">
-<label><b>Version-3:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="updatablerating3" value="From DB">
-    </div>
-
-        <div class="column">
-            <label><b>First Time 5 Rating?:</b></label>
-        <div class="btn-group ml-1 mr-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="bookRatinginput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" >Yes</a>
-            <a class="dropdown-item" >No</a>
+        Set Number : {{sets.number}}
+       <!-- <label><b>Status :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.status}}</div> -->
+             <!-- <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="{{sets.status}}" style="background-color: darkgray; text-align: center;"> -->
+           </div>
+           <hr>
+             <div class="column">
+              Set Book ID : {{sets.bookid}}
+        <!-- <label><b>Book Name :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.bookid}}</div> .book_name -->
+        <!-- <input type="text" readonly class="form-control-plaintext" id="updatableVerifier" value="{{sets.bookid.book_name}}" style="background-color: darkgray; text-align: center;"> -->
         </div>
-        </div>
-    </div>
-          </div>
-
-    <!--############# Corrector Payments############-->
-    <div class="row mt-2"><h5>Corrector Payment:</h5></div>
-    <div class="row mt-4 col-dm-9">
-          <div class="column">
-<label><b>Rate per Page:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="correctorRate" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Total Amount</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="correctorAmount" value="From DB">
-    </div>
-
-        <div class="column">
-            <label><b>Amount Paid?:</b></label>
-        <div class="btn-group ml-1 mr-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="correctorAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" >Yes</a>
-            <a class="dropdown-item" >No</a>
-        </div>
-        </div>
-    </div>
-          </div>
-
-    <!--############# Verifier Payments############-->
-    <div class="row mt-2"><h5>Corrector Payment:</h5></div>
-    <div class="row mt-4 col-dm-9">
-          <div class="column">
-<label><b>Rate per Page:</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="verifierRate" value="From DB">
-    </div>
-           <div class="column">
-<label><b>Total Amount</b></label>
-      <input type="text" readonly class="form-control-plaintext" id="verifierAmount" value="From DB">
-    </div>
-
-        <div class="column">
-            <label><b>Amount Paid?:</b></label>
-        <div class="btn-group ml-1 mr-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="verifierAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" >Yes</a>
-            <a class="dropdown-item" >No</a>
-        </div>
-        </div>
-    </div>
-          </div>
-
-    <!-----##BUTTONS ROW##-->
-
-    <div class="row mt-5 col-dm-9">
-        <div class="column mr-2">
-        <button type="button" class="btn btn-success">Save</button>
+      </div>
+        <hr>
+            <!-- </div> -->
+            <!-- <div class="column"><hr></div> -->
+           <div class="row mt-4 col-dm-9">
+                  <div class="column">
+                   Set Corrector : {{sets.setCorrector}}
+        <!-- <label><b>Corrector :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.setCorrector.name}}</div> -->
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatableCorrector" value="{{sets.setCorrector.name}}" style="background-color: darkgray; text-align: center;"> -->
             </div>
-        <div class="column">
-        <button type="button" class="btn btn-warning">Cancel</button>
+            <hr>
+            <!-- <div class="row mt-4 col-dm-9"> -->
+                   <div class="column">
+                        Set Verifier : {{sets.setVerifier}}
+        <!-- <label><b>Verifier :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.setVerifier.name}}</div> -->
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatableVerifier" value="{{sets.setVerifier.name}}" style="background-color: darkgray; text-align: center;"> -->
             </div>
-    </div>
+            <hr>
+                   <div class="column">
+                   Set Version : {{sets.version}}
+        <!-- <label><b>Version :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.version}}</div> -->
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatableVersion" value="{{sets.version}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+           </div>
 
+            <hr>
+            <div class="row mt-4 col-dm-9">
+                   <div class="column">
+                   Set Status : {{sets.status}}
+        <!-- <label><b>Status :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.status}}</div> -->
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="{{sets.status}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+            <div class="column">
+                  Set repository : {{sets.repoistoryName}}
+       <!-- <label><b>Status :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.status}}</div> -->
+             <!-- <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="{{sets.status}}" style="background-color: darkgray; text-align: center;"> -->
+           </div>
+          
+      <hr>
+      <!-- <div class="row mt-4 col-dm-9"> -->
+           <div class="column">
+            Set Project Manager : {{sets.projectmanager}}
+ <!-- <label><b>Status :</b></label><div style="background-color: darkgray; text-align: center;">{{sets.status}}</div> -->
+       <!-- <input type="text" readonly class="form-control-plaintext" id="updatableStatus" value="{{sets.status}}" style="background-color: darkgray; text-align: center;"> -->
+     </div>
+<!-- </div> -->
+     <hr>
+                   <div class="column">
+        <label><b>Pages :</b></label>
+              <input type="text" readonly class="form-control-plaintext" value="From DB" style="background-color: darkgray; text-align: center;"><!--Need to be added in db-->
+            </div>
+            <hr>
+                  </div>
+                  <div class="column"><hr></div>
+                  <!-- <br>
+                  <br> -->
+        
+             <!--- ###############DATEs########################-->
+                <div class="row mt-2"><h4><b><u>Assignment Details:</u></b></h4></div>
+                <div class="row mt-4 col-dm-9">
+                    <div class="column">
+          <label><b>Assignment Date</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_assignmentdate}}</div>
+                <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate1" value="{{sets.vone_assignmentdate}}" style="background-color: darkgray; text-align: center;"> -->
+              </div>
+              <hr>
+                     <div class="column">
+          <label><b>Deadline</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_deadline}}</div>
+                <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate1" value="{{sets.vone_deadline}}" style="background-color: darkgray; text-align: center;"> -->
+              </div>
+              <hr>
+                     <div class="column">
+          <label><b>Submitted Date:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_expsubdate}}</div>
+                <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate1" value="{{sets.vone_expsubdate}}" style="background-color: darkgray; text-align: center;"> -->
+              </div>
+                    </div>
+          
+                {% if sets.version == 1 %}
+                <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Assignment Date</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_assignmentdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate1" value="{{sets.vone_assignmentdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Deadline</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_deadline}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate1" value="{{sets.vone_deadline}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Submitted Date:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vone_expsubdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate1" value="{{sets.vone_expsubdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+                  </div>
+        
+                  {% elif sets.version == 2 %}
+                <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Assignment Date</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vtwo_assignmentdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate2" value="{{sets.vtwo_assignmentdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Deadline</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vtwo_deadline}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate2" value="{{sets.vtwo_deadline}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Submitted Date:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vtwo_expsubdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate2" value="{{sets.vtwo_expsubdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                  </div>
+        
+                  {% elif sets.version == 3 %}
+                <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Assignment Date</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vthree_assignmentdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="assignmentDate3" value="{{sets.vthree_assignmentdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Deadline</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vthree_deadline}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="deadlineDate3" value="{{sets.vthree_deadline}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Submitted Date:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.vthree_expsubdate}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext mr-5" id="submitDate3" value="{{sets.vthree_expsubdate}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+                  </div>
+                  {% endif %}
+                  
+                  <div class="column"><hr></div>
+                  <!-- <br>
+                  <br> -->
+            <!--- ###############RATINGs########################-->
+            <div class="row mt-2"><h4><b><u>Ratings:</u></b></h4></div>
+            <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Version-1:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.v1_rating}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatablerating1" value="{{sets.v1_rating}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Version-2:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.v2_rating}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatablerating2" value="{{sets.v2_rating}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                <div class="column">
+        <label><b>Version-3:</b></label><div style="background-color: darkgray; text-align: center;">{{sets.v3_rating}}</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="updatablerating3" value="{{sets.v3_rating}}" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+        
+                <div class="column">
+                    <label><b>First Time 5 Rating?:</b></label>
+                <div class="btn-group ml-1 mr-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="bookRatinginput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" >Yes</a>
+                    <a class="dropdown-item" >No</a>
+                </div>
+                </div>
+            </div>
+                  </div>
+                  <div class="column"><hr></div>
+                  <!-- <br>
+                  <br> -->
+            <!--############# Corrector Payments############-->
+            <div class="row mt-2"><h4><b><u>Corrector Payment:</u></b></h4></div>
+            <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Rate per Page:</b></label><div style="background-color: darkgray; text-align: center;">From DB</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="correctorRate" value="From DB" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Total Amount</b></label><div style="background-color: darkgray; text-align: center;">From DB</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="correctorAmount" value="From DB" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+        
+                <div class="column">
+                    <label><b>Amount Paid?:</b></label>
+                <div class="btn-group ml-1 mr-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="correctorAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" >Yes</a>
+                    <a class="dropdown-item" >No</a>
+                </div>
+                </div>
+            </div>
+                  </div>
+                  <div class="column"><hr></div>
+                  <!-- <br>
+                  <br> -->
+            <!--############# Verifier Payments############-->
+            <div class="row mt-2"><h4><b><u>Verifier Payment:</u></b></h4></div>
+            <div class="row mt-4 col-dm-9">
+                  <div class="column">
+        <label><b>Rate per Page:</b></label><div style="background-color: darkgray; text-align: center;">From DB</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="verifierRate" value="5/-" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+                   <div class="column">
+        <label><b>Total Amount</b></label><div style="background-color: darkgray; text-align: center;">From DB</div>
+              <!-- <input type="text" readonly class="form-control-plaintext" id="verifierAmount" value="From DB" style="background-color: darkgray; text-align: center;"> -->
+            </div>
+            <hr>
+        
+                <div class="column">
+                    <label><b>Amount Paid?:</b></label>
+                <div class="btn-group ml-1 mr-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="verifierAMTinput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" >Yes</a>
+                    <a class="dropdown-item" >No</a>
+                </div>
+                </div>
+            </div>
+                  </div>
+                  <div class="column"><hr></div>
+                  <!-- <br>
+                  <br> -->
+              
+            <!-----##BUTTONS ROW##-->
+          
+            <div class="row mt-5 col-dm-9">
+                <div class="column mr-2">
+                    <!-- <a href="{% url 'IITB_OpenOCR-save' sets.setID%}"><button type="submit" class="btn btn-success">Save</button></a> -->
+                    <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                <div class="column">
+                <a href="{% url 'IITB_OpenOCR-Sets' %}"><button type="button" class="btn btn-warning">Cancel</button></a>
+                    </div>
+            </div>
 </form>
-
 
 {% endblock content %}

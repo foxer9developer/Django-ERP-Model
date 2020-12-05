@@ -1,0 +1,94 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+<h1>/IN development stage</h1>
+<br>
+<br>
+{% for set in sets %}
+<h2><a class="article-content"><b>SetID: </b>{{set.setID}}</a></h2> 
+<article class="media content-section">
+  <div class="media-body">
+      <div class="article-metadata">
+          <a class="mr-2"><b> Commit History </b></a>
+          <small class="text-muted"></small>
+      </div>
+          <a class="article-content">Verified by -> {{ set.setVerifier }} &nbsp; , Version -> {{set.version}} &nbsp;<!--on {{ sets.version }} --></a>
+          <br><a class="article-content">Corrected by -> {{ set.setCorrector }} &nbsp; , Version -> {{set.version}} &nbsp;<!--on {{ sets.version }} --></a>
+          <!-- <br>Set Created on {{ sets.version }} -->
+          
+                
+  </div>
+</article>  
+
+<div class="column">
+  <div class="ml-1" style="display:block; max-height:120px; overflow-y:auto; position: relative;">
+    <table class="table table-bordered  table-hover table-sm mb-0" style="border-collapse: collapse; width: 100%;">
+      <thead class="thead-light">
+      <tr>
+      <th style="position: sticky; top: 0; padding: 8px 16px;">Page</th>
+      <th style="position: sticky; top: 0; padding: 8px 16px;">Changes Made By Verifier(%)</th>
+      <th style="position: sticky; top: 0; padding: 8px 16px;">Changes Made By Correcter(%)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Page-1</td>
+      <td>abcd</td>
+      <td>efgh</td>
+      </tr>
+
+      <tr>
+      <td>Page-2</td>
+      <td>abcd</td>
+      <td>efgh</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<div class="progress">
+  <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+                
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Page', 'Corrector', 'Verifier'],
+      ['1',  1000,      400],
+      ['2',  1170,      460],
+      ['3',  660,       1120],
+      ['4',  1030,      540],
+      ['5',  1030,      540],
+      ['6',  1030,      540],
+      ['7',  1030,      540],
+      ['8',  1030,      540],
+      ['9',  1030,      540],
+      ['10',  1030,      540],
+    ]);
+
+    var options = {
+      title: 'Time spent per page',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+                
+{% endfor %}                
+            
+{% endblock content %}
+

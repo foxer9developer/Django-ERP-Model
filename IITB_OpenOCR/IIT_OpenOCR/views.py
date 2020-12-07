@@ -12,7 +12,7 @@ from django.http import QueryDict
 
 PMusername="TeamOCR-IITB"
 PMpass="e3c7d3d67598572c39c93861d56f2c8479b74cce"
-
+#this is a cooment to test pull 
 @login_required
 def home(request):
     if request.user.is_authenticated:

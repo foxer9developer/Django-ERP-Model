@@ -11,7 +11,7 @@ from .forms import setsform
 from django.http import QueryDict
 
 PMusername="TeamOCR-IITB"
-PMpass="Digit@iitb1"
+PMpass="e3c7d3d67598572c39c93861d56f2c8479b74cce"
 
 @login_required
 def home(request):
@@ -75,6 +75,9 @@ def bookpage(request):
             'books': book.objects.filter(book_name__icontains=query_bookName),
             'sets': sets.objects.all()
             }
+            #<!-- {% if sets.bookid == book.book_id %} --><!-- {% endif %} -->
+
+
     else:
         context = {
             'title': 'Books',
@@ -84,7 +87,7 @@ def bookpage(request):
     return render(request, 'IIT_OpenOCR/books.html', context)
 ############################################################################
 @login_required
-def assign_user(request,setid):
+def assign_user(request,setid): #to display the list of correctors/verifiers to assign them to the sets
     clicked_set= sets.objects.get(setID=setid)
     selected_user = request.GET.get('selected')
     searched_user=request.GET.get('searchBar_assigned')
@@ -151,17 +154,20 @@ def assign_user(request,setid):
             }
 
     return render(request, 'IIT_OpenOCR/assignuser.html',context)
-
+########################################################################################################################
 @login_required
-def set_user(request,github_username, setid):
+def set_user(request,github_username, setid):#setting the user as collaborator
     g = Github(PMusername,PMpass)
     g.get_repos
+    print("g.get_repos done, line 159")
     clicked_user = users.objects.get(github_username=github_username)
+    print("clicked user = ", clicked_user)
     set_toassign = sets.objects.get(setID=setid)
+    print("got the set which is to be assigned, line 162")
     reponame = set_toassign.repoistoryName
     repo = g.get_repo(reponame)
     contents = repo.get_contents("README.md")
-    print(contents)
+    print("contents in readme file = ", contents)
     if(set_toassign.setCorrector):
         repo.add_to_collaborators(github_username, "admin")
         set_toassign.setVerifier = clicked_user

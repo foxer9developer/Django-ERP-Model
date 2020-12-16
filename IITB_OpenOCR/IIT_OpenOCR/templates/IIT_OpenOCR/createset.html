@@ -1,0 +1,66 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+<h2 class="align-middle"><b>Create Set here</b></h2>
+
+      <form action="{% url 'IITB_OpenOCR-savenewset' %}" method="POST">
+            {% csrf_token %}
+      <div class="row mt-4 col-dm-9">
+            <div class="column">
+              Set Id : {{set.setID}}
+        </div>
+        <hr>
+        <div class="column">
+        Set Number : {{set.number}}
+           </div>
+           <hr>
+             <div class="column">
+              Set Book ID : {{set.bookid}}
+        </div>
+      </div>
+ 
+            <hr>
+            
+            <div class="row mt-4 col-dm-9">
+                   <div class="column">
+                   Set Status : {{set.status}}
+            </div>
+      <hr>
+           <div class="column">
+            Set Project Manager : {{set.projectmanager}}
+     </div>
+</div>
+     <hr>
+     <div class="row mt-4 col-dm-9">
+     <div class="column">
+           Set repo name : {{set.repoistoryName}}
+    </div>
+            
+    <hr>
+    <!-- <div class="row mt-4 col-dm-9"> -->
+     <!-- <div class="column">
+        Set repo Description : <input type="text" id = "setrepodesc", value="Repository for this set">
+ </div> -->
+</div>
+                   <!-- <div class="column">
+        <label><b>Pages :</b></label>
+              <input type="text" readonly class="form-control-plaintext" value="From DB" style="background-color: darkgray; text-align: center;"> -->
+              <!--Need to be added in db-->
+            <!-- </div> -->
+            <hr>
+                  </div>
+                  
+                  <div class="column"><hr></div>
+              
+            <!-----##BUTTONS ROW##-->
+          
+            <div class="row mt-5 col-dm-9">
+                <div class="column mr-2">
+                    <button type="submit" class="btn btn-success">Create New Set</button>
+                    </div>
+                <div class="column">
+                <a href="{% url 'IITB_OpenOCR-Sets' %}"><button type="button" class="btn btn-warning">Cancel</button></a>
+                    </div>
+            </div>
+</form>
+
+{% endblock content %}

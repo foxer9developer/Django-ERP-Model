@@ -1,0 +1,50 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+<h2 class="align-middle"><b>Book Details :</b></h2>
+
+      <form action="{% url 'IITB_OpenOCR-savebook' book.book_id %}" method="POST">
+
+            {% csrf_token %}
+      <div class="row mt-4 col-dm-9">
+            <div class="column">
+              Book Id : {{book.book_id}}
+        </div>
+        <hr>
+        <div class="column">
+        Book Name : {{book.book_name}}
+           </div>
+           <hr>
+             <div class="column">
+                Total Pages: {{book.book_totalpages}}
+        </div>
+      </div>
+        <hr>
+           
+           <div class="row mt-4 col-dm-9">
+                  <div class="column">
+                    Total Sets : {{ book.book_totalsets }}
+            </div>
+            <hr>
+                   <div class="column">
+                    Completed Sets : {{ book.book_setCompleted }}
+            </div>
+            <hr>
+                   <div class="column">
+                    Book Status : {{ book.book_status }}
+            </div>
+           </div>
+              
+            <!-----##BUTTONS ROW##-->
+          
+            <div class="row mt-5 col-dm-9">
+                <div class="column mr-2">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                    
+                <div class="column">
+                <a href="{% url 'IITB_OpenOCR-Bookspage' %}"><button type="button" class="btn btn-warning">Cancel</button></a>
+                    </div>
+            </div>
+</form>
+
+{% endblock content %}

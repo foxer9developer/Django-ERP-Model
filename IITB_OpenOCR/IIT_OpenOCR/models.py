@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-role_choices = (("Corrector","Corrector"),("Verifier","Verifier"),("Project Manager", "Project Manager"))
+role_choices = (("Corrector","Corrector"),("Verifier","Verifier"),("Project Manager", "Project Manager"),("orrctorVerifier","corrverifier"))#("Corrector-Verifier", "Corrector-Verifier")
 status_user = (("Idle","Idle"),("Assigned","Assigned"))
 class users(models.Model):
     github_username = models.CharField(max_length=50, unique=True)
@@ -28,7 +28,7 @@ class book(models.Model):
     def __str__(self):
         return self.book_id
 
-status_choices=(("Set OCRed","Set OCRed"),("Corrector","Corrector"),("Verifier","Verifier"),("In Process","In Process"),("Unassigned","Unassigned"),("Accepted","Accepted"))
+status_choices=(("Set OCRed","Set OCRed"),("Corrector","Corrector"),("Verifier","Verifier"),("Formatter", "Formatter"),("In Process","In Process"),("Unassigned","Unassigned"),("Accepted","Accepted"))
 set_rating=((1,1),(2,2),(3,3),(4,4),(5,5))
 class sets(models.Model):
     setID = models.CharField(max_length=120, unique=True)

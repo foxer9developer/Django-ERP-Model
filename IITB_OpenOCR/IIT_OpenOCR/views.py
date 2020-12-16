@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import datetime
 from github import Github
 from django.http import HttpResponse
-from .forms import setsform
+from .forms import setsform, bookform, newsetsform
 from django.http import QueryDict
 
 PMusername="TeamOCR-IITB"
@@ -157,49 +157,41 @@ def assign_user(request,setid): #to display the list of correctors/verifiers to 
 ########################################################################################################################
 @login_required
 def set_user(request,github_username, setid):#setting the user as collaborator
-    g = Github(PMusername,PMpass)
-    g.get_repos
+    g = Github(PMpass)
+    repos = g.get_repos
+    print("user === ",g.get_user())
+    # print("request object says ----------------",request.GET)
     print("g.get_repos done, line 159")
     clicked_user = users.objects.get(github_username=github_username)
     print("clicked user = ", clicked_user)
     set_toassign = sets.objects.get(setID=setid)
+    print("set repo name ==== ", set_toassign.repoistoryName  )
     print("got the set which is to be assigned, line 162")
+    print("set Name =====", set_toassign)
     reponame = set_toassign.repoistoryName
     repo = g.get_repo(reponame)
     contents = repo.get_contents("README.md")
     print("contents in readme file = ", contents)
+    print("Corrector = ", set_toassign.setCorrector)
     if(set_toassign.setCorrector):
-        repo.add_to_collaborators(github_username, "admin")
+        repo.add_to_collaborators(github_username, permission="admin")
         set_toassign.setVerifier = clicked_user
+        set_toassign.status = "Verifier"
+        print("sent invitation to Verifier")
+
     else:
-        repo.add_to_collaborators(github_username, "admin")
+        repo.add_to_collaborators(github_username, permission="admin")
         set_toassign.setCorrector =clicked_user
         set_toassign.status = "Corrector"
+        print("sent invitation to corrector")
     set_toassign.version = 1
     set_toassign.save()
     clicked_user.user_status = "Assigned"
     clicked_user.save()
     return redirect('/sets')
 
-# def assign_verfier(request,github_username,setid):
-#     context = {
-#         'title': 'Assign Verifier',
-#         'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
-#         'setid': setid
-#     }
-#     return render(request, 'IIT_OpenOCR/assignuser.html', context)
-
-# # 0
-# @login_required
-# def assign_verifier(request):
-#     return HttpResponse("dev")
-
-# @login_required
-# def set_verifier(request):
-#     return HttpResponse("dev")
-
 @login_required
-def search_user(request):
+def search_user(request): #Users Page
         selected_role = request.GET.get('userrole')
         selected_status = request.GET.get('userstatus')
         query_userName = request.GET.get('searchBar_user')
@@ -246,21 +238,7 @@ def search_user(request):
         return render(request, 'IIT_OpenOCR/userspage.html', context)
 
 @login_required
-def set_update(request, setID):
-    print("entered sets update page")
-
-    print("Set id = ", setID)
-    clicked_set = sets.objects.get(setID = setID)
-    print(clicked_set)
-
-    context = {
-        'title': 'update-set',
-        'sets' : setsform(instance=clicked_set)
-    }
-    return render(request, 'IIT_OpenOCR/setsUpdate.html', context)
-
-@login_required
-def sets_detail(request):
+def sets_detail(request): #Sets Page
     query_book_setspage = request.GET.get('searchBar_book_setspage')
     if query_book_setspage != '' and query_book_setspage is not None:
         context = {
@@ -275,18 +253,83 @@ def sets_detail(request):
     return render(request, 'IIT_OpenOCR/Sets.html', context)
 
 @login_required
-def saveset(request, setID):
+def set_update(request, setID): #Update sets page
+    clicked_set = sets.objects.get(setID = setID)
+    context = {
+        'title': 'update-set',
+        'sets' : setsform(instance=clicked_set)
+    }
+    return render(request, 'IIT_OpenOCR/setsUpdate.html', context)
 
+@login_required
+def saveset(request, setID): #saving updated sets in the db
     setsID = request.POST.dict()['setID']
     clicked = sets.objects.get(setID=setsID)
-
+    repository = request.POST.dict()['repoistoryName']
+    version = request.POST.dict()['version']
+    role = request.GET.get('user_role')
     formobj1 = setsform(request.POST, instance= clicked)
+    if formobj1.is_valid():
+        formobj1.save()
+        # g = Github(PMpass)
+        # user = g.get_user()
+        # repo = g.get_repo(repository)
+        # contents = repo.get_contents("project.xml")
+        # repo.update_file(contents.path,"change 2","<Version>{}</Version><Stage>{}</Stage>".format(version,role),contents.sha)
+    else:
+        print("error2 = ",formobj1.errors)
+    return redirect('/sets')
+
+@login_required
+def deleteset(request, setID):
+    if request.method == 'POST':
+        setid = sets.objects.get(setID = setID)
+        setid.delete()
+        print("set with set-id ", setid, " deleted")
+    return redirect('/sets')
+
+@login_required
+def book_update(request, book_id): #update book page
+    clicked_set = book.objects.get(book_id = book_id)
+    context = {
+        'title': 'update-book',
+        'book' : bookform(instance=clicked_set)
+    }
+    print("Context ended")
+    return render(request, 'IIT_OpenOCR/bookupdate.html', context)
+
+@login_required
+def savebook(request, book_id): #saving updated book in the db
+    bookID = request.POST.dict()['book_id']
+    clicked = book.objects.get(book_id=bookID)
+    formobj1 = bookform(request.POST, instance= clicked)
     if formobj1.is_valid():
         formobj1.save()
     else:
         print("error2 = ",formobj1.errors)
+    return redirect('/books')
 
-    return redirect('/sets')
+def createnewset(request): #create new sets page
+    formobj = newsetsform()
+    return render(request, 'IIT_OpenOCR/createset.html', {'set':formobj})
+
+def savenewset(request): #save new set in db and create a repository for then new set
+    if request.method == 'POST':
+        formobj = newsetsform(request.POST)
+        # print(formobj)
+        if formobj.is_valid():
+            formobj.save()
+            reponame = request.POST.dict()['repoistoryName']
+            desc = "This is the set for "+ reponame
+            g = Github(PMpass)
+            user = g.get_user()
+            user.create_repo(name=reponame, description=desc)
+        else:
+            print("Formobj is not valid...errors = ", formobj.errors)            
+
+    else:
+        print("Data not recieved")
+    return redirect('/books')
 
 def about(request):
     return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})
@@ -295,18 +338,12 @@ def about(request):
 def spcific_user(request, g_username):
     clicked_user = users.objects.get(github_username=g_username)
     clicked_sets = sets.objects.filter(setCorrector=clicked_user)|sets.objects.filter(setVerifier=clicked_user)
-    # books= book.objects.filter()
-    #fetch clicked user
     context = {
         'title': g_username,
         'clicked': clicked_user,
         'sets':clicked_sets
     }
     return render(request,'IIT_OpenOCR/specificuser.html',context)
-
-
-def book_update(request):
-    return HttpResponse("Book Update")
 
 def set_log(request, setID):
     clicked_set = sets.objects.filter(setID = setID)

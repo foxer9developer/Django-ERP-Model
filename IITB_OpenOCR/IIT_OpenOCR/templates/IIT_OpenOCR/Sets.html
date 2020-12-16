@@ -1,7 +1,7 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
-<nav class="navbar navbar-light bg-light mb-3">
-    <div class="btn-group mr-2">
+<nav class="navbar navbar-light bg-light mb-1" >
+    <!-- <div class="btn-group mr-2">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="bookStatusFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Select Book-Status</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -17,21 +17,30 @@
             <a class="dropdown-item" href="#">Completed</a>
             <a class="dropdown-item" href="#">In-Progress</a>
         </div>
-    </div>
-
+    </div> -->
     <form class="form-inline">
         <input class="form-control" type="search" name="searchBar_book_setspage" placeholder="Search BookName of Set" aria-label="Search">
         <button class="btn btn-outline-success ml-1" type="submit">Search</button>
     </form>
-
 </nav>
 
+<div style="position: absolute; right: 10px;">
+    <a href="{% url 'IITB_OpenOCR-createset' %}"><button type="button" class="btn btn-outline-success ">Create Set</button></a>
+</div>
+<br>
+<br>
 {% for sets in sets %}
         <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
+            <div class="media-body" style="position: relative;">
+                <div class="article-metadata" style="position: relative;">
                     <a class="mr-2"><b>Version: </b>{{ sets.version }} &nbsp; <b>Status: </b>{{sets.status}}</a>
                     <small class="text-muted"></small>
+                    <!-- <div class="column"> -->
+                    <form action="{% url 'IITB_OpenOCR-deleteset' sets.setID%}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" style="position: absolute; right: 0px; ">Delete Set</button>
+                    </form>
+                        <!-- </div> -->
                 </div>
                 <h2><a class="article-content"><b>SetID: </b>{{ sets.setID }}</a></h2>
 
@@ -41,8 +50,8 @@
                     <p class="article-content"><b>Book Name: </b>{{sets.bookid.book_name}}</p>
                     <p class="article-content"><b>Project Manager: </b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
-                    <a href="{{sets.setID}}" class="btn btn-success" role="button">Assign Corrector</a>
-                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="{{sets.setID}}" class="btn btn-success" role="button" >Assign Corrector</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" style="position: absolute; right: 0px; ">View SetLog</a>
                 {% endif %}
 
                 <!-- when corrector assigned and verifier needs to be assigned -->
@@ -52,8 +61,8 @@
                     <p class="article-content"><b>Book Name: </b>{{sets.bookid.book_name}}</p>
                     <p class="article-content"><b>Project Manager: </b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
-                    <a href="{{sets.setID}}" class="btn btn-success" role="button">Assign Verifier</a>
-                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="{{sets.setID}}" class="btn btn-success" role="button" >Assign Verifier</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" style="position: absolute; right: 0px; ">View SetLog</a>
                 {% endif %}
                 <!-- when corrector and verifier both assigned -->
                 {% if sets.setCorrector.name and sets.setVerifier.name %}
@@ -62,8 +71,8 @@
                     <p class="article-content"><b>Book Name: </b>{{sets.bookid.book_name}}</p>
                     <p class="article-content"><b>Project Manager:</b>{{ sets.projectmanager }}</p>
                     <p class="article-content"><b>Set Repository Name: </b>{{sets.repoistoryName}}</p>
-                    <a href="/set_update/{{sets.setID}}" class="btn btn-primary ml-3" role="button"  >Update Set</a>
-                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" >View SetLog</a>
+                    <a href="/set_update/{{sets.setID}}" class="btn btn-primary ml-3" role="button" >Update Set</a>
+                    <a href="/set_log/{{sets.setID}}" class="btn btn-secondary ml-3" role="button" style="position: absolute; right: 0px; ">View SetLog</a>
                 {% endif %}
                
             </div>

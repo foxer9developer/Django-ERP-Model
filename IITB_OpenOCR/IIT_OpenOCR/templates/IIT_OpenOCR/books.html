@@ -30,13 +30,16 @@
                 </div>
 
                 <h2><a class="article-content"><b>Book Name: </b>{{ book.book_name }}</a></h2>
+
                 <div class="row">
                 <div class="column mr-5 ml-3">
                 <p class="article-content"><b>Total Pages: </b>{{ book.book_totalpages }}</p>
                 <p class="article-content"><b>Total Sets: </b>{{ book.book_totalsets }} </p>
                 <p class="article-content"><b>Completed Sets: </b>{{ book.book_setCompleted }}</p>
                 <p class="article-content"><b>Book Status: </b>{{ book.book_status }}</p>
+                <a href="/books_update/{{book.book_id}}/" class="btn btn-primary ml-3" role="button"  >Update Book</a>
                 </div>
+                <!-- {{book.book_id}} -->
                 <div class="column">
                     <div class="ml-5" style="display:block; max-height:120px; overflow-y:auto; position: relative;">
                         <table class="table table-bordered  table-hover table-sm mb-0" style="border-collapse: collapse; width: 100%;">

@@ -11,7 +11,7 @@
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <a class="dropdown-item" href="?selected=All">All</a>
-    <a class="dropdown-item" href="?selected=Idle">Idle</a>
+    <a class="dropdown-item" href="?selected=Available">Available</a>
     <a class="dropdown-item" href="?selected=Assigned">Set Assigned</a>
   </div>
 </div>
@@ -32,7 +32,7 @@
       <p class="card-text text-secondary"><b class="text-dark">UserRole: </b>{{ users.user_role }}</p>
       <p class="card-text text-secondary"><b class="text-dark">GitHub: </b>{{ users.github_username }}</p>
       <p class="card-text text-secondary"><b class="text-dark">Email-ID: </b>{{users.user_email}}</p>
-      <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Idle</b></span>
+      <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Available</b></span>
       <a class="btn btn-success" role="button" href="{{users.github_username}}/">Assign</a>
   </div>
 </div>

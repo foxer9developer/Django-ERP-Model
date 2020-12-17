@@ -16,4 +16,4 @@ class bookform(forms.ModelForm):
 class newsetsform(forms.ModelForm):
     class Meta:
         model = sets
-        fields = ['setID', 'number', 'bookid', 'status', 'projectmanager', 'repoistoryName']
+        fields = ['setID', 'number', 'bookid', 'status', 'projectmanager', 'repoistoryName', 'vone_deadline']

@@ -92,10 +92,10 @@ def assign_user(request,setid): #to display the list of correctors/verifiers to 
     selected_user = request.GET.get('selected')
     searched_user=request.GET.get('searchBar_assigned')
     if(clicked_set.setCorrector):
-        if(selected_user=="Idle"):
+        if(selected_user=="Available"):
             context = {
             'title': 'Assign Verifier',
-            'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+            'users': users.objects.filter(user_role="Verifier").filter(user_status="Available"),
             'setid': setid
             }
         elif(selected_user=="Assigned"):
@@ -118,15 +118,15 @@ def assign_user(request,setid): #to display the list of correctors/verifiers to 
         else:
             context = { 
                 'title': 'Assign Verifier',
-                'users': users.objects.filter(user_role="Verifier").filter(user_status="Idle"),
+                'users': users.objects.filter(user_role="Verifier").filter(user_status="Available"),
                 'setid': setid
             }
 
     else:
-        if (selected_user == "Idle"):
+        if (selected_user == "Available"):
             context = {
             'title':'Assign Corrector',
-            'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
+            'users': users.objects.filter(user_role="Corrector").filter(user_status="Available"),
             'setid': setid
             }
         elif (selected_user == "Assigned"):
@@ -149,7 +149,7 @@ def assign_user(request,setid): #to display the list of correctors/verifiers to 
         else:
             context = {
                 'title': 'Assign Corrector',
-                'users': users.objects.filter(user_role="Corrector").filter(user_status="Idle"),
+                'users': users.objects.filter(user_role="Corrector").filter(user_status="Available"),
                 'setid': setid
             }
 
@@ -215,10 +215,10 @@ def search_user(request): #Users Page
                 'title':'All Users',
                 'users': users.objects.all()
             }
-        elif(selected_status =="Idle"):
+        elif(selected_status =="Available"):
             context = {
-                'title': 'Idle Users',
-                'users': users.objects.filter(user_status="Idle")
+                'title': 'Available Users',
+                'users': users.objects.filter(user_status="Available")
             }
         elif(selected_status == "Assigned"):
             context = {
@@ -266,16 +266,19 @@ def saveset(request, setID): #saving updated sets in the db
     setsID = request.POST.dict()['setID']
     clicked = sets.objects.get(setID=setsID)
     repository = request.POST.dict()['repoistoryName']
+    print(repository)
     version = request.POST.dict()['version']
-    role = request.GET.get('user_role')
+    stage = request.POST.dict()['stage']
+    # role = request.GET.get('user_role')
     formobj1 = setsform(request.POST, instance= clicked)
     if formobj1.is_valid():
         formobj1.save()
-        # g = Github(PMpass)
-        # user = g.get_user()
-        # repo = g.get_repo(repository)
-        # contents = repo.get_contents("project.xml")
-        # repo.update_file(contents.path,"change 2","<Version>{}</Version><Stage>{}</Stage>".format(version,role),contents.sha)
+        g = Github(PMpass)
+        user = g.get_user()
+        repo = g.get_repo(repository)
+        contents = repo.get_contents("project.xml")
+        repo.update_file( contents.path,"commit message","<?xml version='1.0'?>\n<Project name='Book1'>\n<ItemGroup>\n<Filter Include='Image'>\n<Extensions>jpeg;jpg;png;</Extensions>\n</Filter>\n<Filter Include='Document'>\n<Extensions>docx;txt;html</Extensions>\n</Filter>\n</ItemGroup>\n<ItemGroup>\n</ItemGroup>\n<Metadata>\n<Version>{}</Version>\n<Stage>{}</Stage>\n<Corrector>None</Corrector>\n<SanityChecker>None</SanityChecker>\n<Verifier>None</Verifier>\n</Metadata>\n</Project>".format(version,stage), contents.sha )
+
     else:
         print("error2 = ",formobj1.errors)
     return redirect('/sets')
@@ -305,6 +308,7 @@ def savebook(request, book_id): #saving updated book in the db
     formobj1 = bookform(request.POST, instance= clicked)
     if formobj1.is_valid():
         formobj1.save()
+        
     else:
         print("error2 = ",formobj1.errors)
     return redirect('/books')
@@ -320,7 +324,10 @@ def savenewset(request): #save new set in db and create a repository for then ne
         if formobj.is_valid():
             formobj.save()
             reponame = request.POST.dict()['repoistoryName']
-            desc = "This is the set for "+ reponame
+            deadline = request.POST.dict()['vone_deadline']
+            # lastdate = request.
+            desc = "This is the set for "+ reponame+", The deadline for this is "+ deadline +"."
+            # +" Last date to submit is "+ lastdate
             g = Github(PMpass)
             user = g.get_user()
             user.create_repo(name=reponame, description=desc)
@@ -329,7 +336,7 @@ def savenewset(request): #save new set in db and create a repository for then ne
 
     else:
         print("Data not recieved")
-    return redirect('/books')
+    return redirect('/sets')
 
 def about(request):
     return render(request, 'IIT_OpenOCR/about.html', {'title':'About'})

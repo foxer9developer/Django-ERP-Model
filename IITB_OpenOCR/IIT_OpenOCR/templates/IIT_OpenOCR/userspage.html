@@ -22,7 +22,7 @@
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="/users/?userstatus=All">All</a>
-    <a class="dropdown-item" href="/users/?userstatus=Idle">Idle</a>
+    <a class="dropdown-item" href="/users/?userstatus=Available">Available</a>
     <a class="dropdown-item" href="/users/?userstatus=Assigned">Set Assigned</a>
   </div>
 </div>
@@ -46,7 +46,7 @@
     {% if users.user_status == "Assigned" %} -->
         <span class="badge badge-pill badge-warning" style="border-radius:15px;"><b> Assigned</b></span>
     {% else %}
-        <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Idle</b></span>
+        <span class="badge badge-pill badge-success" style="border-radius:15px;"><b>Available</b></span>
       {% endif %}
   </div>
 </div>

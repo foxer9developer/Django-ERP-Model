@@ -2,13 +2,13 @@ from django.db import models
 from django.utils import timezone
 
 role_choices = (("Corrector","Corrector"),("Verifier","Verifier"),("Project Manager", "Project Manager"),("orrctorVerifier","corrverifier"))#("Corrector-Verifier", "Corrector-Verifier")
-status_user = (("Idle","Idle"),("Assigned","Assigned"))
+status_user = (("Available","Available"),("Assigned","Assigned"))
 class users(models.Model):
     github_username = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=120)
     user_role = models.CharField(max_length=15,choices=role_choices, default='Corrector')
     user_email = models.EmailField()
-    user_status = models.CharField(max_length=80, default="Idle",choices=status_user)
+    user_status = models.CharField(max_length=80, default="Available",choices=status_user)
 
     USERNAME_FIELD = 'github_username'
     REQUIRED_FIELDS = ['github_username', 'name','user_email','user_role']
@@ -27,7 +27,7 @@ class book(models.Model):
     book_status = models.CharField(max_length=50, default="Unassigned", choices=book_progress)
     def __str__(self):
         return self.book_id
-
+stage_choices = (("Corrector","Corrector"),("Verifier","Verifier"))
 status_choices=(("Set OCRed","Set OCRed"),("Corrector","Corrector"),("Verifier","Verifier"),("Formatter", "Formatter"),("In Process","In Process"),("Unassigned","Unassigned"),("Accepted","Accepted"))
 set_rating=((1,1),(2,2),(3,3),(4,4),(5,5))
 class sets(models.Model):
@@ -40,6 +40,7 @@ class sets(models.Model):
     repoistoryName = models.CharField(null=True, max_length=500, blank=True)
     status = models.CharField(max_length=120, default="Unassigned", choices=status_choices)
     version = models.IntegerField(null=True,blank=True)
+    stage = models.CharField(max_length=50, default="Corrector", choices=stage_choices)
     vone_deadline = models.DateField(null=True,blank=True)
     vone_assignmentdate = models.DateField(null=True,blank=True)
     vone_expsubdate = models.DateField(null=True,blank=True)

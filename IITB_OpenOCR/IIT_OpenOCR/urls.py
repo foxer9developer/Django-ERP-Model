@@ -15,8 +15,13 @@ urlpatterns = [
     path('saveset/<str:setID>/',iitviews.saveset,name='IITB_OpenOCR-saveset'),
     path('deleteset/<str:setID>/',iitviews.deleteset,name='IITB_OpenOCR-deleteset'),
     path('set_log/<str:setID>/',iitviews.set_log,name='IITB_OpenOCR-SetLog'),
+    path('deletebook/<str:book_id>/',iitviews.deletebook,name='IITB_OpenOCR-deletebook'),
     path('books_update/<str:book_id>/',iitviews.book_update,name='IITB_OpenOCR-BookUpdate'),
     path('savebook/<str:book_id>/',iitviews.savebook,name='IITB_OpenOCR-savebook'),
     path('createset/', iitviews.createnewset, name = 'IITB_OpenOCR-createset'),
-    path('savenewset/', iitviews.savenewset, name = 'IITB_OpenOCR-savenewset')
-]
+    path('savenewset/', iitviews.savenewset, name = 'IITB_OpenOCR-savenewset'),
+    path('addbook/', iitviews.addbook, name = 'IITB_OpenOCR-addbook'),
+    path('adduser/', iitviews.adduser, name = 'IITB_OpenOCR-adduser'),
+    path('deleteuser/<str:g_username>/', iitviews.deleteuser, name = 'IITB_OpenOCR-deleteuser'),
+
+] 

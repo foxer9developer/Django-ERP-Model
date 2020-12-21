@@ -18,17 +18,14 @@
             <a class="dropdown-item" href="#">In-Progress</a>
         </div>
     </div> -->
+    <a href="{% url 'IITB_OpenOCR-createset' %}"><button type="button" class="btn btn-outline-success ">Create Set</button></a>
     <form class="form-inline">
         <input class="form-control" type="search" name="searchBar_book_setspage" placeholder="Search BookName of Set" aria-label="Search">
         <button class="btn btn-outline-success ml-1" type="submit">Search</button>
     </form>
 </nav>
 
-<div style="position: absolute; right: 10px;">
-    <a href="{% url 'IITB_OpenOCR-createset' %}"><button type="button" class="btn btn-outline-success ">Create Set</button></a>
-</div>
-<br>
-<br>
+
 {% for sets in sets %}
         <article class="media content-section">
             <div class="media-body" style="position: relative;">

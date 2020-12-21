@@ -1,0 +1,44 @@
+{% extends "IIT_OpenOCR/base.html" %}
+{% block content %}
+<h2 class="align-middle"><b>Add a New Book</b></h2>
+
+      <form action="{% url 'IITB_OpenOCR-addbook' %}" method="POST">
+            {% csrf_token %}
+      <div class="row mt-4 col-dm-9">
+            <div class="column">
+              Book Id : {{book.book_id}}
+        </div>
+        <hr>
+        <div class="column">
+        Book Name : {{book.book_name}}
+           </div>
+           <hr>
+             <div class="column">
+              Book Total Pages : {{book.book_totalpages}}
+        </div>
+      </div>
+ 
+            <hr>
+            
+            <div class="row mt-4 col-dm-9">
+                   <div class="column">
+                   Book total sets : {{book.book_totalsets}}
+            </div>
+      <hr>
+           <div class="column">
+            Book Set completed : {{book.book_setCompleted}}
+     </div>
+</div>
+     <hr>
+     <div class="row mt-4 col-dm-9">
+		   <div class="column">
+		         Book Status : {{book.book_status}}
+		  </div>
+    </div>   
+    <br>       
+            <input class="btn btn-success" type="submit" value="Add">       
+						<a href="{% url 'IITB_OpenOCR-Bookspage' %}"><button class="btn btn-danger" type="button" >Cancel</button></a>
+
+</form>
+
+{% endblock content %}

@@ -17,3 +17,8 @@ class newsetsform(forms.ModelForm):
     class Meta:
         model = sets
         fields = ['setID', 'number', 'bookid', 'status', 'projectmanager', 'repoistoryName', 'vone_deadline']
+
+class AddUserForm(forms.ModelForm):
+    class Meta:
+        model = users
+        fields = ['github_username', 'user_role', 'name', 'user_email']

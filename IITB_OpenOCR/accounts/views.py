@@ -8,16 +8,16 @@ from .forms import RegisterationForm, loginForm
 from django.contrib import messages
 
 # Create your views here.
-def register(request):
-    form = RegisterationForm()
-    if(request.method == 'POST'):
-        form = RegisterationForm(request.POST)
-        if(form.is_valid()):
-            form.save()
-            return redirect('accounts:login')
+# def register(request):
+#     form = RegisterationForm()
+#     if(request.method == 'POST'):
+#         form = RegisterationForm(request.POST)
+#         if(form.is_valid()):
+#             form.save()
+#             return redirect('accounts:login')
 
-    contents = {'form': form}
-    return render(request, 'register.html', contents)
+#     contents = {'form': form}
+#     return render(request, 'register.html', contents)
 
 
 def loginPage(request):

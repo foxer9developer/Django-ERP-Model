@@ -9,11 +9,11 @@
   <div class="tab-content">
     <div id="userDetails" class="tab-pane fade show active ">
       <h3 class="mt-3 mb-3">User Details</h3>
-      <form>
+      <!-- <form> -->
   <div class="form-group row">
     <label for="staticName" class="col-sm-2 col-form-label mb-3"><b>Name:</b></label>
     <div class="col-sm-10">
-      <input readonly class="form-control-plaintext" id="staticName" value= {{ clicked.name }}>
+      <input readonly class="form-control-plaintext" id="staticName" value= "{{ clicked.name }}">
     </div>
   </div>
   <div class="form-group row">
@@ -40,6 +40,11 @@
       <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ clicked.user_email }}">
     </div>
   </div>
+  
+<!-- </form> -->
+<form action="{% url 'IITB_OpenOCR-deleteuser' clicked.github_username%}" method="POST" class="d-inline">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger" style="position: absolute; right: 0px; ">Delete user</button>
 </form>
     </div>
     <div id="assignedSets" class="tab-pane fade">

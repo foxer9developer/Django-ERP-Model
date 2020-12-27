@@ -1,45 +1,47 @@
 {% extends "IIT_OpenOCR/base.html" %}
 {% block content %}
 <h2 class="align-middle"><b>Create a New Set</b></h2>
-	<form action="{% url 'IITB_OpenOCR-savenewset' %}" method="POST">
+<form action="{% url 'IITB_OpenOCR-savenewset' %}" method="POST">
 	{% csrf_token %}
-		<div class="row mt-4 col-dm-9">
-			<div class="column">
-				Set Id : {{set.setID}}
-      </div>
-      <hr>
-      <div class="column">
-        Set Number : {{set.number}}
-      </div>
-      <hr>
-      <div class="column">
-  	    Set Book ID : {{set.bookid}}
-      </div>
-    </div>
-		<hr>
-		<div class="row mt-4 col-dm-9">
-			<div class="column">
-				Set Status : {{set.status}}
-			</div>
-		  <hr>
-			<div class="column">
-				Set Project Manager : {{set.projectmanager}}
-			</div>
-		  <hr>
+	<div class="row mt-4 col-dm-9">
+		<div class="column">
+			Set Id : {{set.setID}}
 		</div>
-    <div class="row mt-4 col-dm-9">
-    	<div class="column">
-				Set repo name : {{set.repoistoryName}}
-			</div>
-    	<div class="column">
-      	Set Deadline : {{set.vone_deadline}}
-			</div>
-    </div>        
- <br>
+		<hr>
+		<div class="column">
+			Set Number : {{set.number}}
+		</div>
+		<hr>
+		<div class="column">
+			Set Book ID : {{set.bookid}}
+		</div>
+	</div>
+	<hr>
+	<div class="row mt-4 col-dm-9">
+		<div class="column">
+			Set Status : {{set.status}}
+		</div>
+		<hr>
+		<div class="column">
+			Set Project Manager : {{set.projectmanager}}
+		</div>
+		<hr>
+	</div>
+	<div class="row mt-4 col-dm-9">
+		<div class="column">
+			Set repo name : {{set.repoistoryName}}
+		</div>
+		<hr>
+		<div class="column">
+			Set Deadline : <input type="date" value={{set.vone_deadline}}>
+		</div>
+		<hr>
+	</div>
+	<br>
 
 
-                 <button type="submit" class="btn btn-success">Create</button>
-                <a href="{% url 'IITB_OpenOCR-Sets' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+	<button type="submit" class="btn btn-success">Create</button>
+	<a href="{% url 'IITB_OpenOCR-Sets' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
 </form>
 
 {% endblock content %}

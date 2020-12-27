@@ -9,9 +9,8 @@ from github import Github
 from django.http import HttpResponse
 from .forms import setsform, bookform, newsetsform, AddUserForm
 from django.http import QueryDict
+from secret import *
 
-# PMusername="TeamOCR-IITB"
-PMpass="e3c7d3d67598572c39c93861d56f2c8479b74cce"
 
 @login_required
 def home(request):
@@ -19,7 +18,7 @@ def home(request):
         count = users.objects.filter(github_username = request.user.username).count()
         social = request.user.social_auth.get(provider='github')
         access_token = social.extra_data['access_token']
-        g = Github(access_token)
+        g = Github(login_or_token=access_token)
         g.get_repos
         repo = g.get_repo("TeamOCR-IITB/IITB-ProjectManager")
         contents = repo.get_contents("README.md")
@@ -85,7 +84,7 @@ def bookpage(request):
             'sets': sets.objects.all()
             }
     return render(request, 'IIT_OpenOCR/books.html', context)
-############################################################################
+
 @login_required
 def assign_user(request,setid): #to display the list of correctors/verifiers to assign them to the sets
     clicked_set= sets.objects.get(setID=setid)
@@ -154,28 +153,32 @@ def assign_user(request,setid): #to display the list of correctors/verifiers to 
             }
 
     return render(request, 'IIT_OpenOCR/assignuser.html',context)
-########################################################################################################################
+
 @login_required
-def set_user(request,github_username, setid):#setting the user as collaborator
-    g = Github(PMpass)
-    repos = g.get_repos
-    print("user === ",g.get_user())
+def set_user(request,github_username, setid):# setting the user as collaborator
+    g = Github(login_or_token=PMpass)
+    user = g.get_user()
+    login = user.login
+    print("user === ",login)
     clicked_user = users.objects.get(github_username=github_username)
     print("clicked user = ", clicked_user)
     set_toassign = sets.objects.get(setID=setid)
     reponame = set_toassign.repoistoryName
-    repo = g.get_repo(reponame)
+    repositoryName = "TeamOCR-IITB/"+reponame
+    print("Repository = ", repositoryName)
+    repo = g.get_repo(full_name_or_id=repositoryName)
     if(set_toassign.setCorrector):
         repo.add_to_collaborators(github_username, permission="admin")
         set_toassign.setVerifier = clicked_user
         set_toassign.status = "Verifier"
         print("sent invitation to Verifier")
-
+        messages.info(request,"Github user was sent an invite to be added as corrector")
     else:
         repo.add_to_collaborators(github_username, permission="admin")
         set_toassign.setCorrector =clicked_user
         set_toassign.status = "Corrector"
         print("sent invitation to corrector")
+        messages.info(request,"Github user was sent an invite to be added as verifier")
     set_toassign.version = 1
     set_toassign.save()
     clicked_user.user_status = "Assigned"
@@ -236,8 +239,9 @@ def adduser(request):
         form = AddUserForm(request.POST)
         if(form.is_valid()):
             form.save()
+            gituser = request.POST.dict()['github_username']
+            messages.success(request,"Github user was added")
             return redirect('/users')
-
     contents = {'form': form}
     return render(request, 'IIT_OpenOCR/adduser.html', contents)
 
@@ -247,6 +251,7 @@ def deleteuser(request, g_username):
     if request.method == 'POST':
         git_username = users.objects.get(github_username = g_username)
         git_username.delete()
+        messages.info(request,"Github user was deleted")
         print("user with username ", git_username, " deleted")
     return redirect('/users')
 
@@ -256,6 +261,7 @@ def deletebook(request, book_id):
     if request.method == 'POST':
         specific_book = book.objects.get(book_id = book_id)
         specific_book.delete()
+        messages.info(request,"book was deleted")
     return redirect('/books')
 
 @login_required
@@ -287,21 +293,46 @@ def saveset(request, setID): #saving updated sets in the db
     setsID = request.POST.dict()['setID']
     clicked = sets.objects.get(setID=setsID)
     repository = request.POST.dict()['repoistoryName']
-    print(repository)
     version = request.POST.dict()['version']
     stage = request.POST.dict()['stage']
+    print(repository)
+    oldCorrector = clicked.setCorrector.github_username
+    oldVerifier = clicked.setVerifier.github_username
+    print("old set Corrector = ", oldCorrector)
+    print("old set verifier = ", oldVerifier)
     # role = request.GET.get('user_role')
     formobj1 = setsform(request.POST, instance= clicked)
     if formobj1.is_valid():
-        formobj1.save()
-        g = Github(PMpass)
+        g = Github(login_or_token=PMpass)
         user = g.get_user()
-        repo = g.get_repo(repository)
+        login = user.login
+        repositoryName = "TeamOCR-IITB/"+repository
+        repo = g.get_repo(full_name_or_id=repositoryName)
+        print("REPOSITORY name === " , repo)
+        
+        print("Ncbs", clicked.setCorrector.github_username)
+        print("NVbs", clicked.setVerifier.github_username)
+        formobj1.save()
+        
         contents = repo.get_contents("project.xml")
         repo.update_file( contents.path,"Project.xml file updated from PMUI.","<?xml version='1.0'?>\n<Project name='Book1'>\n<ItemGroup>\n<Filter Include='Image'>\n<Extensions>jpeg;jpg;png;</Extensions>\n</Filter>\n<Filter Include='Document'>\n<Extensions>docx;txt;html</Extensions>\n</Filter>\n</ItemGroup>\n<ItemGroup>\n</ItemGroup>\n<Metadata>\n<Version>{}</Version>\n<Stage>{}</Stage>\n<Corrector>None</Corrector>\n<SanityChecker>None</SanityChecker>\n<Verifier>None</Verifier>\n</Metadata>\n</Project>".format(version,stage), contents.sha )
 
+        print("new Set corrector after saving =--------- ", clicked.setCorrector)
+        print("new Set Verifier after saving =--------- ", clicked.setVerifier)
+        if oldVerifier != clicked.setVerifier.github_username:
+            repo.remove_from_collaborators(oldVerifier)
+            print("previous verifier removed")
+            repo.add_to_collaborators(clicked.setVerifier.github_username, permission="admin")
+            print("verifier changed")
+        if oldCorrector != clicked.setCorrector.github_username:
+            repo.remove_from_collaborators(oldCorrector)
+            print("previous corrector removed")
+            repo.add_to_collaborators(clicked.setCorrector.github_username, permission="admin")
+            print("corrector changed")
+        messages.info(request,"set with id was updated")
     else:
         print("error2 = ",formobj1.errors)
+        messages.info(request, "set with id was not updated, please try again. Also check the project.xml file in the repository.")
     return redirect('/sets')
 
 @login_required
@@ -309,7 +340,8 @@ def deleteset(request, setID):
     if request.method == 'POST':
         setid = sets.objects.get(setID = setID)
         setid.delete()
-        print("set with set-id ", setid, " deleted")
+        messages.info(request,"Set with setID is deleted")
+        print("set with set-id- ", setid, " deleted")
     return redirect('/sets')
 
 @login_required
@@ -329,6 +361,8 @@ def savebook(request, book_id): #saving updated book in the db
     formobj1 = bookform(request.POST, instance= clicked)
     if formobj1.is_valid():
         formobj1.save()
+        booknam = clicked.book_name
+        messages.info(request, "book is updated")
         
     else:
         print("error2 = ",formobj1.errors)
@@ -340,6 +374,8 @@ def addbook(request):#Add new book
         formobj = bookform(request.POST)
         if formobj.is_valid():
             formobj.save()
+            bookname = request.POST.dict()['book_name']
+            messages.info(request, "new book is created")
         else:
             print("form is not valid, error = ", formobj.errors)
         return redirect("/books")
@@ -359,12 +395,12 @@ def savenewset(request): #save new set in db and create a repository for then ne
         # print(formobj)
         if formobj.is_valid():
             formobj.save()
+            setid = request.POST.dict()['setID']
+            messages.info(request, "new set is created")
             reponame = request.POST.dict()['repoistoryName']
             deadline = request.POST.dict()['vone_deadline']
-            # lastdate = request.
             desc = "This is the set for "+ reponame+", The deadline for this is "+ deadline +"."
-            # +" Last date to submit is "+ lastdate
-            g = Github(PMpass)
+            g = Github(login_or_token=PMpass)
             user = g.get_user()
             user.create_repo(name=reponame, description=desc)
         else:

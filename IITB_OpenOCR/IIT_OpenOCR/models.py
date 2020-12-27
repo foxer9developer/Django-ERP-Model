@@ -32,11 +32,11 @@ status_choices=(("Set OCRed","Set OCRed"),("Corrector","Corrector"),("Verifier",
 set_rating=((1,1),(2,2),(3,3),(4,4),(5,5))
 class sets(models.Model):
     setID = models.CharField(max_length=120, unique=True)
-    number = models.IntegerField()#setNumber
+    number = models.IntegerField()#-------------------------------->setNumber
     bookid = models.ForeignKey(book , on_delete= models.CASCADE)
-    setCorrector = models.ForeignKey(users, related_name='set_corrector',limit_choices_to={'user_role': "Corrector"},on_delete= models.PROTECT,null=True,blank=True)
-    setVerifier = models.ForeignKey(users, related_name='set_verifier', limit_choices_to={'user_role': "Verifier"}, on_delete= models.PROTECT,null=True,blank=True)
-    projectmanager = models.ForeignKey(users, related_name='set_projectmanager', limit_choices_to={'user_role': "Project Manager"},  on_delete= models.PROTECT)
+    setCorrector = models.ForeignKey(users, related_name='set_corrector',limit_choices_to={'user_role': "Corrector"},on_delete= models.CASCADE,null=True,blank=True)
+    setVerifier = models.ForeignKey(users, related_name='set_verifier', limit_choices_to={'user_role': "Verifier"}, on_delete= models.CASCADE,null=True,blank=True)
+    projectmanager = models.ForeignKey(users, related_name='set_projectmanager', limit_choices_to={'user_role': "Project Manager"},  on_delete= models.CASCADE)
     repoistoryName = models.CharField(null=True, max_length=500, blank=True)
     status = models.CharField(max_length=120, default="Unassigned", choices=status_choices)
     version = models.IntegerField(null=True,blank=True)

@@ -35,6 +35,9 @@
   </form>
 </nav>
 
+{% for message in messages %}
+	<p style="background: yellow; style:italics; font-size: 20px; padding: 10px; border: 1px solid lightgray; margin: 10px;"> {{message}}</p>
+{% endfor %} 
 
 {% for users in users %}
     {% if users.user_role != 'Project Manager' %}

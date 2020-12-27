@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from secret import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'py!43z$z8p!)1&fb1+@!z3a!8n^(q4qv8ppj9i-+_e09zb_5=b'
+# SECRET_KEY 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.redirects',
     'social_django',
-    'accounts'
+    'accounts',
 ]
 
 SITE_ID = 1
@@ -78,10 +79,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'IITB_OpenOCR.wsgi.application'
 
 #Iv1.d930ff6760a6bff9
-SOCIAL_AUTH_GITHUB_KEY = '12aaf58ddd7119efaf18'
+# SOCIAL_AUTH_GITHUB_KEY 
 
 #012c348e9f2c082563ad9b560abbc0817cfb61ac
-SOCIAL_AUTH_GITHUB_SECRET = 'f7d4cd701e41af968e92f3c87d8edd047a37f819'
+# SOCIAL_AUTH_GITHUB_SECRET 
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
@@ -96,8 +97,12 @@ LOGIN_REDIRECT_URL = '/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pmui',
+        'USER': 'user1',
+        'PASSWORD': PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

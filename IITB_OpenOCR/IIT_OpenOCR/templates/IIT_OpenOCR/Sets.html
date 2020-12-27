@@ -25,6 +25,9 @@
     </form>
 </nav>
 
+{% for message in messages %}
+	<p style="background: yellow; style:italics; font-size: 20px; padding: 10px; border: 1px solid lightgray; margin: 10px;"> {{message}}</p>
+{% endfor %} 
 
 {% for sets in sets %}
         <article class="media content-section">
